@@ -32,7 +32,7 @@
 </main>
 <script>
 // 선생님의 Apps Script 웹앱 /exec 주소를 여기에 연결합니다.
-const APPS_SCRIPT_URL='PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+const APPS_SCRIPT_URL='https://script.google.com/macros/s/AKfycbxXJyqA13pPS2HRzTDZdt3L1uKXp9Ev7iiACDdadzD9BvysA7cW2lkIuSDH7eJVOGuuhA/exec';
 const MAX_SECONDS=45;
 const state={stream:null,recorder:null,chunks:[],blob:null,url:null,seconds:0,timer:null,recording:false,category:'배려',submitting:false};
 const $=id=>document.getElementById(id);const els={setup:$('setupWarning'),recommender:$('recommender'),recipient:$('recipient'),rosterStatus:$('rosterStatus'),mic:$('micButton'),micIcon:$('micIcon'),timer:$('timer'),recordHelp:$('recordHelp'),preview:$('preview'),audio:$('audio'),recordStatus:$('recordStatus'),text:$('praiseText'),submit:$('submit'),submitStatus:$('submitStatus'),form:$('postForm'),iframe:$('postTarget'),formScreen:$('formScreen'),success:$('success'),again:$('again')};
