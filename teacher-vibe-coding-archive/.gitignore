@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+.DS_Store
+Thumbs.db
+credentials.json
+service-account*.json
+student-data/
+private-data/
+uploads/
+*.log
+
