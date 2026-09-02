@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#080d18">
+  <title>우리 반 스크래치 복권</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #080d18;
+      --surface: rgba(255,255,255,.085);
+      --border: rgba(255,255,255,.14);
+      --text: #f8fafc;
+      --muted: #9ca9ba;
+      --purple: #8b5cf6;
+      --cyan: #22d3ee;
+      --danger: #fb7185;
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--bg); }
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Pretendard, "Noto Sans KR", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, #222c48, transparent 38%),
+        radial-gradient(circle at 90% 20%, rgba(124,58,237,.17), transparent 30%),
+        #080d18;
+    }
+
+    button { font: inherit; }
+    button:focus-visible { outline: 3px solid #67e8f9; outline-offset: 3px; }
+
+    .skip {
+      position: absolute;
+      left: -9999px;
+      top: 8px;
+      z-index: 50;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #fff;
+      color: #111827;
+    }
+    .skip:focus { left: 8px; }
+
+    .wrapper {
+      width: min(calc(100% - 22px), 620px);
+      margin: 0 auto;
+      padding: 14px 0 48px;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(14,21,36,.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .brand-icon {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(139,92,246,.18);
+      color: #c4b5fd;
+    }
+    .brand-title { font-weight: 800; }
+    .brand-sub { margin-top: 2px; color: var(--muted); font-size: 12px; }
+
+    .sound {
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .hero { padding: 33px 8px 19px; text-align: center; }
+    .eyebrow {
+      font-family: Montserrat, sans-serif;
+      color: #c4b5fd;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .17em;
+    }
+    .hero h1 {
+      margin: 8px 0 11px;
+      font-size: clamp(29px, 8vw, 43px);
+      line-height: 1.08;
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .counts {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+    .count {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      font-size: 13px;
+    }
+
+    .panel {
+      padding: 28px 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .panel h2 { margin: 14px 0 7px; }
+    .panel p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .hidden { display: none !important; }
+
+    .spinner { color: #c4b5fd; font-size: 30px; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .retry {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .ticket {
+      position: relative;
+      overflow: hidden;
+      padding: 14px;
+      border-radius: 27px;
+      border: 1px solid rgba(255,255,255,.16);
+      background:
+        radial-gradient(circle at 0 0, rgba(139,92,246,.2), transparent 34%),
+        linear-gradient(145deg, #282039, #151827);
+      box-shadow: 0 26px 65px rgba(0,0,0,.36);
+    }
+
+    .ticket::before,
+    .ticket::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #080d18;
+      transform: translateY(-50%);
+    }
+    .ticket::before { left: -14px; }
+    .ticket::after { right: -14px; }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 5px 5px 15px;
+    }
+    .ticket-name { font-weight: 800; }
+    .ticket-guide { display: block; margin-top: 3px; color: #9ca9ba; font-size: 12px; }
+    .ticket-no {
+      font-family: Montserrat, sans-serif;
+      color: #cbd5e1;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .scratch-area {
+      position: relative;
+      overflow: hidden;
+      min-height: 270px;
+      border-radius: 22px;
+      background: radial-gradient(circle at 50% 20%, #fff, #edf2f7 45%, #dce4ee);
+    }
+
+    .result {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      color: #111827;
+      text-align: center;
+    }
+    .result-icon {
+      width: 64px;
+      height: 64px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: #ede9fe;
+      color: #6d28d9;
+      font-size: 25px;
+    }
+    .result-label {
+      margin-top: 13px;
+      font-family: Montserrat, sans-serif;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+    .result h2 {
+      margin: 6px 0 7px;
+      font-size: clamp(25px, 7vw, 37px);
+      line-height: 1.15;
+    }
+    .result p {
+      margin: 0;
+      max-width: 420px;
+      color: #526174;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: crosshair;
+      transition: opacity .5s ease;
+    }
+
+    .debris {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .chip {
+      position: absolute;
+      width: 5px;
+      height: 3px;
+      border-radius: 50%;
+      background: #e4e8ed;
+      box-shadow: 0 0 2px rgba(255,255,255,.85);
+      animation: chipMove .7s ease-out forwards;
+    }
+    @keyframes chipMove {
+      to {
+        transform: translate(var(--dx), var(--dy)) rotate(250deg);
+        opacity: 0;
+      }
+    }
+
+    .progress { padding: 15px 4px 1px; }
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      color: #cbd5e1;
+      font-size: 12px;
+    }
+    .track {
+      height: 8px;
+      margin-top: 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255,255,255,.09);
+    }
+    .bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--cyan));
+      transition: width .18s;
+    }
+    .help { margin: 11px 0 1px; text-align: center; color: #97a4b5; font-size: 12px; }
+
+    .confetti {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .confetti span {
+      position: absolute;
+      top: -15px;
+      width: 8px;
+      height: 13px;
+      background: hsl(var(--h), 82%, 63%);
+      animation: fall var(--d) linear forwards;
+    }
+    @keyframes fall {
+      to {
+        transform: translate(var(--x), 350px) rotate(720deg);
+        opacity: .1;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .wrapper { width: calc(100% - 18px); padding-top: 10px; }
+      .header { border-radius: 17px; }
+      .ticket { padding: 12px; }
+      .scratch-area { min-height: 240px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#main">본문 바로가기</a>
+
+  <main id="main" class="wrapper">
+    <header class="header">
+      <div class="brand">
+        <div class="brand-icon"><i class="fa-solid fa-ticket" aria-hidden="true"></i></div>
+        <div>
+          <div class="brand-title">우리 반 Lucky Ticket</div>
+          <div class="brand-sub">랜덤 스크래치 복권</div>
+        </div>
+      </div>
+
+      <button id="soundButton" class="sound" type="button" aria-label="긁는 소리 켜기">
+        <i class="fa-solid fa-volume-xmark" aria-hidden="true"></i>
+      </button>
+    </header>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="eyebrow">SCRATCH &amp; REVEAL</div>
+      <h1 id="pageTitle">오늘의 행운을<br>긁어보세요</h1>
+      <p>
+        남아 있는 복권 중 한 장이 무작위로 배정됩니다.<br>
+        한 번 배정된 복권은 다시 나오지 않습니다.
+      </p>
+
+      <div class="counts" aria-live="polite">
+        <span class="count">전체 <strong id="total">-</strong>장</span>
+        <span class="count">남은 복권 <strong id="remaining">-</strong>장</span>
+      </div>
+    </section>
+
+    <section id="loading" class="panel" aria-live="polite">
+      <i class="fa-solid fa-arrows-rotate spinner" aria-hidden="true"></i>
+      <h2>복권을 섞고 있습니다</h2>
+      <p>잠시 후 나만의 복권이 나타납니다.</p>
+    </section>
+
+    <section id="errorPanel" class="panel hidden" aria-live="assertive">
+      <i class="fa-solid fa-triangle-exclamation" style="font-size:32px;color:#fda4af" aria-hidden="true"></i>
+      <h2>연결을 확인해 주세요</h2>
+      <p id="errorText">Apps Script 서버에 연결하지 못했습니다.</p>
+      <button id="retryButton" class="retry" type="button">
+        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i> 다시 연결
+      </button>
+    </section>
+
+    <section id="soldout" class="panel hidden" aria-live="polite">
+      <i class="fa-solid fa-circle-check" style="font-size:32px;color:#c4b5fd" aria-hidden="true"></i>
+      <h2>복권이 모두 소진되었습니다</h2>
+      <p>선생님이 복권을 리셋하면 다시 참여할 수 있습니다.</p>
+    </section>
+
+    <section id="ticket" class="ticket hidden" aria-live="polite">
+      <div class="ticket-header">
+        <div>
+          <div id="ticketTitle" class="ticket-name">오늘의 행운 복권</div>
+          <span class="ticket-guide">은색 영역을 손가락이나 마우스로 긁어 주세요</span>
+        </div>
+        <div class="ticket-no">NO. <span id="ticketNo">--</span></div>
+      </div>
+
+      <div id="scratchArea" class="scratch-area">
+        <div class="result">
+          <div class="result-icon">
+            <i id="resultIcon" class="fa-solid fa-trophy" aria-hidden="true"></i>
+          </div>
+          <div id="resultLabel" class="result-label">WINNER</div>
+          <h2 id="resultText">결과</h2>
+          <p id="resultDescription"></p>
+        </div>
+
+        <canvas id="scratchCanvas" aria-label="복권 스크래치 영역"></canvas>
+        <div id="debris" class="debris" aria-hidden="true"></div>
+        <div id="confetti" class="confetti" aria-hidden="true"></div>
+      </div>
+
+      <div class="progress">
+        <div class="progress-row">
+          <span>긁은 정도</span>
+          <strong id="percent">0%</strong>
+        </div>
+        <div class="track">
+          <div id="bar" class="bar"></div>
+        </div>
+      </div>
+
+      <p class="help">55% 이상 긁으면 은박이 자동으로 벗겨집니다.</p>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxeXyUy7aAYbWkgb9hJ7_Uc_2bgPgnuKIXWFrTGt6qp21nxKp72lQ_TO4Umns6p8cOW0Q/exec';
+
+    const DEVICE_KEY = 'lotteryGithubDeviceV2';
+    const TOKEN_KEY = 'lotteryGithubTokenV2';
+    const $ = id => document.getElementById(id);
+
+    const loading = $('loading');
+    const errorPanel = $('errorPanel');
+    const soldout = $('soldout');
+    const ticketPanel = $('ticket');
+    const canvas = $('scratchCanvas');
+    const scratchArea = $('scratchArea');
+    const debris = $('debris');
+    const confetti = $('confetti');
+
+    let currentTicket = null;
+    let ctx = null;
+    let drawing = false;
+    let lastPoint = null;
+    let moves = 0;
+    let finished = false;
+    let soundEnabled = false;
+    let audioContext = null;
+    let lastSound = 0;
+    let drawingBusy = false;
+
+    function showOnly(name) {
+      loading.classList.toggle('hidden', name !== 'loading');
+      errorPanel.classList.toggle('hidden', name !== 'error');
+      soldout.classList.toggle('hidden', name !== 'soldout');
+      ticketPanel.classList.toggle('hidden', name !== 'ticket');
+    }
+
+    function api(params) {
+      return new Promise((resolve, reject) => {
+        const callback = '__lottery_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+        const script = document.createElement('script');
+        const timeout = setTimeout(() => {
+          cleanup();
+          reject(new Error('서버 응답 시간이 초과되었습니다.'));
+        }, 15000);
+
+        function cleanup() {
+          clearTimeout(timeout);
+          try { delete window[callback]; } catch (_) {}
+          script.remove();
+        }
+
+        window[callback] = data => {
+          cleanup();
+          resolve(data);
+        };
+
+        const query = new URLSearchParams({ ...params, callback });
+        script.src = API_URL + '?' + query.toString();
+        script.async = true;
+        script.onerror = () => {
+          cleanup();
+          reject(new Error('Apps Script 서버에 연결하지 못했습니다.'));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    function createDeviceId() {
+      if (window.crypto && crypto.randomUUID) return 'device-' + crypto.randomUUID();
+      return 'device-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 13);
+    }
+
+    function deviceId() {
+      let id = localStorage.getItem(DEVICE_KEY);
+      if (!id) {
+        id = createDeviceId();
+        localStorage.setItem(DEVICE_KEY, id);
+      }
+      return id;
+    }
+
+    function updateCounts(data) {
+      if (!data) return;
+      if (data.total !== undefined) $('total').textContent = data.total;
+      if (data.remaining !== undefined) $('remaining').textContent = data.remaining;
+    }
+
+    function showError(message) {
+      $('errorText').textContent = message || '서버에 연결하지 못했습니다.';
+      showOnly('error');
+    }
+
+    async function start() {
+      showOnly('loading');
+      try {
+        const status = await api({ action: 'status' });
+        if (!status || !status.ok) throw new Error(status?.message || '복권 상태를 불러오지 못했습니다.');
+        updateCounts(status);
+        await new Promise(resolve => setTimeout(resolve, 450));
+        await drawLottery();
+      } catch (error) {
+        showError(error.message);
+      }
+    }
+
+    async function drawLottery() {
+      if (drawingBusy) return;
+      drawingBusy = true;
+      showOnly('loading');
+
+      try {
+        const result = await api({
+          action: 'draw',
+          deviceId: deviceId(),
+          resumeToken: localStorage.getItem(TOKEN_KEY) || ''
+        });
+
+        updateCounts(result);
+
+        if (!result || !result.ok) {
+          if (result?.soldOut) {
+            localStorage.removeItem(TOKEN_KEY);
+            showOnly('soldout');
+            return;
+          }
+          throw new Error(result?.message || '복권을 받을 수 없습니다.');
+        }
+
+        currentTicket = result.ticket;
+        localStorage.setItem(TOKEN_KEY, currentTicket.token);
+        showTicket();
+      } catch (error) {
+        showError(error.message);
+      } finally {
+        drawingBusy = false;
+      }
+    }
+
+    function showTicket() {
+      $('ticketTitle').textContent = currentTicket.title || '오늘의 행운 복권';
+      $('ticketNo').textContent = currentTicket.no || '--';
+      $('resultText').textContent = currentTicket.result || '결과';
+      $('resultDescription').textContent = currentTicket.description || '';
+
+      const type = String(currentTicket.type || '').trim();
+      if (type === '꽝') {
+        $('resultIcon').className = 'fa-solid fa-arrow-rotate-right';
+        $('resultLabel').textContent = 'TRY AGAIN';
+      } else if (type === '특별') {
+        $('resultIcon').className = 'fa-solid fa-crown';
+        $('resultLabel').textContent = 'SPECIAL';
+      } else {
+        $('resultIcon').className = 'fa-solid fa-trophy';
+        $('resultLabel').textContent = 'WINNER';
+      }
+
+      $('percent').textContent = '0%';
+      $('bar').style.width = '0%';
+      finished = false;
+      moves = 0;
+      showOnly('ticket');
+      requestAnimationFrame(makeSilver);
+    }
+
+    function makeSilver() {
+      const rect = scratchArea.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      canvas.style.opacity = '1';
+      canvas.style.pointerEvents = 'auto';
+
+      ctx = canvas.getContext('2d', { willReadFrequently: true });
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const w = rect.width;
+      const h = rect.height;
+      const gradient = ctx.createLinearGradient(0, 0, w, h);
+      gradient.addColorStop(0, '#727a85');
+      gradient.addColorStop(.12, '#f4f6f8');
+      gradient.addColorStop(.27, '#9aa2ac');
+      gradient.addColorStop(.43, '#ffffff');
+      gradient.addColorStop(.59, '#818a96');
+      gradient.addColorStop(.76, '#e7ebef');
+      gradient.addColorStop(.9, '#a1a8b1');
+      gradient.addColorStop(1, '#727b86');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.globalAlpha = .22;
+      for (let y = -h; y < h * 2; y += 8) {
+        ctx.strokeStyle = Math.random() > .5 ? '#fff' : '#59616c';
+        ctx.lineWidth = Math.random() * .7 + .2;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y + w * .23);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      const particleCount = Math.min(900, Math.floor(w * h / 115));
+      for (let i = 0; i < particleCount; i++) {
+        ctx.fillStyle = Math.random() > .5 ? 'rgba(255,255,255,.48)' : 'rgba(45,53,64,.20)';
+        ctx.beginPath();
+        ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 1.2 + .2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const shine = ctx.createLinearGradient(0, 0, w, 0);
+      shine.addColorStop(0, 'rgba(255,255,255,0)');
+      shine.addColorStop(.45, 'rgba(255,255,255,.08)');
+      shine.addColorStop(.52, 'rgba(255,255,255,.30)');
+      shine.addColorStop(.60, 'rgba(255,255,255,.06)');
+      shine.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = shine;
+      ctx.fillRect(0, 0, w, h);
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = 'rgba(36,43,53,.80)';
+      ctx.font = '900 18px Montserrat, sans-serif';
+      ctx.fillText('SCRATCH HERE', w / 2, h / 2 - 4);
+      ctx.font = '700 13px Pretendard, sans-serif';
+      ctx.fillText('손가락이나 마우스로 긁어 주세요', w / 2, h / 2 + 24);
+
+      drawing = false;
+      lastPoint = null;
+    }
+
+    function pointer(event) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+        time: performance.now()
+      };
+    }
+
+    function scratch(from, to) {
+      if (!ctx) return;
+      const distance = Math.hypot(to.x - from.x, to.y - from.y);
+      const time = Math.max(8, to.time - from.time);
+      const speed = distance / time;
+      const width = Math.min(58, 34 + speed * 14);
+
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.stroke();
+
+      for (let i = 0; i < 9; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const distanceFromTip = Math.random() * width * .65;
+        ctx.beginPath();
+        ctx.arc(
+          to.x + Math.cos(angle) * distanceFromTip,
+          to.y + Math.sin(angle) * distanceFromTip,
+          Math.random() * 4.5 + 1,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+      }
+      ctx.restore();
+
+      makeChips(to.x, to.y, width);
+      scratchSound(speed);
+    }
+
+    function makeChips(x, y, width) {
+      for (let i = 0; i < 2; i++) {
+        const chip = document.createElement('span');
+        chip.className = 'chip';
+        chip.style.left = (x + (Math.random() - .5) * width) + 'px';
+        chip.style.top = (y + (Math.random() - .5) * width * .5) + 'px';
+        chip.style.setProperty('--dx', ((Math.random() - .5) * 38) + 'px');
+        chip.style.setProperty('--dy', (12 + Math.random() * 30) + 'px');
+        debris.appendChild(chip);
+        setTimeout(() => chip.remove(), 750);
+      }
+    }
+
+    function scratchedPercent() {
+      if (!ctx) return 0;
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      const step = Math.max(14, Math.round(17 * (window.devicePixelRatio || 1)));
+      let total = 0;
+      let clear = 0;
+
+      for (let y = 0; y < canvas.height; y += step) {
+        for (let x = 0; x < canvas.width; x += step) {
+          total++;
+          const alpha = data[(y * canvas.width + x) * 4 + 3];
+          if (alpha < 40) clear++;
+        }
+      }
+      return total ? Math.round(clear / total * 100) : 0;
+    }
+
+    function checkProgress() {
+      if (finished) return;
+      const value = Math.min(100, scratchedPercent());
+      $('percent').textContent = value + '%';
+      $('bar').style.width = value + '%';
+      if (value >= 55) reveal();
+    }
+
+    function reveal() {
+      if (finished) return;
+      finished = true;
+      drawing = false;
+      $('percent').textContent = '100%';
+      $('bar').style.width = '100%';
+      canvas.style.opacity = '0';
+      canvas.style.pointerEvents = 'none';
+
+      if (currentTicket.type !== '꽝') celebrate();
+      api({ action: 'scratched', token: currentTicket.token }).catch(console.error);
+    }
+
+    function celebrate() {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      for (let i = 0; i < 48; i++) {
+        const piece = document.createElement('span');
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.setProperty('--h', Math.floor(Math.random() * 360));
+        piece.style.setProperty('--d', (1.7 + Math.random() * 1.8) + 's');
+        piece.style.setProperty('--x', ((Math.random() - .5) * 190) + 'px');
+        confetti.appendChild(piece);
+        setTimeout(() => piece.remove(), 3700);
+      }
+    }
+
+    function scratchSound(speed) {
+      if (!soundEnabled || performance.now() - lastSound < 65) return;
+      lastSound = performance.now();
+
+      try {
+        audioContext = audioContext || new (window.AudioContext || window.webkitAudioContext)();
+        const length = Math.floor(audioContext.sampleRate * .035);
+        const buffer = audioContext.createBuffer(1, length, audioContext.sampleRate);
+        const array = buffer.getChannelData(0);
+
+        for (let i = 0; i < length; i++) {
+          array[i] = (Math.random() * 2 - 1) * (1 - i / length);
+        }
+
+        const source = audioContext.createBufferSource();
+        const filter = audioContext.createBiquadFilter();
+        const gain = audioContext.createGain();
+        filter.type = 'highpass';
+        filter.frequency.value = 900;
+        gain.gain.value = Math.min(.035, .012 + speed * .008);
+        source.buffer = buffer;
+        source.connect(filter).connect(gain).connect(audioContext.destination);
+        source.start();
+      } catch (_) {}
+    }
+
+    canvas.addEventListener('pointerdown', event => {
+      if (finished) return;
+      drawing = true;
+      lastPoint = pointer(event);
+      try { canvas.setPointerCapture(event.pointerId); } catch (_) {}
+    });
+
+    canvas.addEventListener('pointermove', event => {
+      if (!drawing || finished || !lastPoint) return;
+      const current = pointer(event);
+      scratch(lastPoint, current);
+      lastPoint = current;
+      moves++;
+      if (moves % 7 === 0) checkProgress();
+    });
+
+    ['pointerup', 'pointercancel'].forEach(name => {
+      canvas.addEventListener(name, () => {
+        if (!drawing) return;
+        drawing = false;
+        checkProgress();
+      });
+    });
+
+    $('soundButton').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      $('soundButton').innerHTML = soundEnabled
+        ? '<i class="fa-solid fa-volume-high" aria-hidden="true"></i>'
+        : '<i class="fa-solid fa-volume-xmark" aria-hidden="true"></i>';
+      $('soundButton').setAttribute('aria-label', soundEnabled ? '긁는 소리 끄기' : '긁는 소리 켜기');
+    });
+
+    $('retryButton').addEventListener('click', start);
+
+    start();
+  </script>
+</body>
+</html>
