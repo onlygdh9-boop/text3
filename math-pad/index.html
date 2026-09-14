@@ -45,6 +45,8 @@
           <button class="tab" role="tab" aria-selected="false" data-key="p14">14번</button>
           <button class="tab" role="tab" aria-selected="false" data-key="p15">15번</button>
           <button class="tab" role="tab" aria-selected="false" data-key="p17">17번</button>
+          <button class="tab" role="tab" aria-selected="false" data-key="unit5">대단원 5번</button>
+          <button class="tab" role="tab" aria-selected="false" data-key="unit15">대단원 15번</button>
         </div>
       </div>
     </div>
@@ -52,9 +54,9 @@
   <main class="stage" id="stage" aria-live="polite"></main>
   <script>
     const pages={
-      current:'problems/current.html',p11:'problems/p11.html',p13:'problems/p13.html',p14:'problems/p14.html',p15:'problems/p15.html',p17:'problems/p17.html'
+      current:'problems/current.html',p11:'problems/p11.html',p13:'problems/p13.html',p14:'problems/p14.html',p15:'problems/p15.html',p17:'problems/p17.html',unit5:'problems/unit5.html',unit15:'problems/unit15.html'
     };
-    const labels={current:'7·9번',p11:'11번',p13:'13번',p14:'14번',p15:'15번',p17:'17번'};
+    const labels={current:'7·9번',p11:'11번',p13:'13번',p14:'14번',p15:'15번',p17:'17번',unit5:'대단원 5번',unit15:'대단원 15번'};
     const stage=document.getElementById('stage');
     const openCurrent=document.getElementById('openCurrent');
     const tabs=[...document.querySelectorAll('.tab')];
