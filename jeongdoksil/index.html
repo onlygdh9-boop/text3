@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>정독실 출석부</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script>if (!localStorage.getItem("jeongdoksil_teacher_token")) location.replace("./teacher-login.html");</script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow hero-signature">Created by Dolong Teacher</p>
+        <h1>정독실 출석부</h1>
+        <p class="hero-copy">자리 번호로 빠르게 결석을 체크하고, 학생별 월간 X 개수와 불참 신청 승인까지 한 곳에서 관리할 수 있습니다.</p>
+      </div>
+      <div class="hero-card">
+        <div class="hero-stat-row"><p class="hero-stat-label">이번 달 운영 일수</p><p class="hero-stat" id="hero-operating-days">0일</p></div>
+        <div class="hero-stat-row"><p class="hero-stat-label">이번 달 승인 대기</p><p class="hero-stat secondary" id="hero-pending-count">0건</p></div>
+      </div>
+    </header>
+    <main class="layout">
+      <aside class="sidebar">
+        <button class="nav-btn active" data-view="teacher-dashboard">교사용 대시보드</button>
+        <button class="nav-btn" data-view="teacher-seats">자리/학생 설정</button>
+        <button class="nav-btn" data-view="teacher-calendar">출석부 생성</button>
+        <button class="nav-btn" data-view="teacher-attendance">출석 체크</button>
+        <button class="nav-btn" data-view="teacher-requests">불참 신청 승인</button>
+        <button class="nav-btn" type="button" id="teacher-logout-btn">로그아웃</button>
+      </aside>
+      <section class="content">
+        <section class="view active" id="teacher-dashboard">
+          <div class="panel-grid">
+            <article class="panel">
+              <div class="panel-head"><div><p class="panel-kicker">이번 달 요약</p><h2>월별 현황</h2></div><label class="inline-field"><span>조회 월</span><input type="month" id="dashboard-month"></label></div>
+              <div class="stats-grid" id="dashboard-summary"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><p class="panel-kicker">빠른 안내</p><h2>사용 순서</h2></div></div>
+              <ol class="steps"><li>자리와 학생을 입력하고 학생 계정을 발급합니다.</li><li>운영 요일과 제외 일정을 설정한 뒤 해당 월 출석부를 생성합니다.</li><li>출석 담당자는 자리 번호를 보며 해당 교시 결석 학생만 체크합니다.</li><li>학생은 학생용 화면에서 불참 신청을 하고 교사는 승인 여부를 처리합니다.</li></ol>
+            </article>
+          </div>
+          <article class="panel">
+            <div class="panel-head"><div><p class="panel-kicker">학생별 집계</p><h2>월간 집계 선택 보기</h2></div></div>
+            <div class="dashboard-switcher"><button class="dashboard-tab active" data-dashboard-view="seat">좌석별 현황</button><button class="dashboard-tab" data-dashboard-view="absence">X 랭킹</button><button class="dashboard-tab" data-dashboard-view="participation">성실 랭킹</button><button class="dashboard-tab" data-dashboard-view="table">상세 표</button></div>
+            <div class="dashboard-panel active" id="dashboard-panel-seat"><div class="dashboard-seat-grid" id="dashboard-seat-grid"></div></div>
+            <div class="dashboard-panel" id="dashboard-panel-absence"><div class="ranking-list" id="dashboard-absence-ranking"></div></div>
+            <div class="dashboard-panel" id="dashboard-panel-participation"><div class="ranking-list" id="dashboard-participation-ranking"></div></div>
+            <div class="dashboard-panel" id="dashboard-panel-table"><div class="table-wrap"><table><thead><tr><th>자리</th><th>학생</th><th>아이디</th><th>이번 달 X 횟수</th><th>이번 달 참여 횟수</th></tr></thead><tbody id="dashboard-student-summary"></tbody></table></div></div>
+            <div class="dashboard-detail-card" id="dashboard-student-detail"></div>
+          </article>
+        </section>
+        <section class="view" id="teacher-seats">
+          <article class="panel">
+            <div class="panel-head"><div><p class="panel-kicker">교사용 기본 설정</p><h2>자리와 학생 배정</h2></div><div class="panel-actions top-actions"><button class="primary-btn" id="save-seat-config-btn" type="button">설정 저장</button><button class="secondary-btn" id="add-seat-btn" type="button">학생 추가</button><button class="danger-btn" id="clear-seat-config-btn" type="button">전체 삭제</button></div></div>
+            <form class="account-form" id="teacher-config-form"><label class="field"><span>교사 이름</span><input type="text" id="teacher-name" placeholder="예: 정독실 담당교사"></label><label class="field"><span>학생 배정 기준 월</span><input type="month" id="teacher-seat-month"></label><label class="field"><span>안내</span><input type="text" value="선택한 월마다 자리와 학생을 따로 저장할 수 있습니다." disabled></label></form>
+            <div class="import-tools"><div class="import-guide"><strong>엑셀 일괄 등록</strong><p>엑셀 양식 파일을 열어 작성한 뒤 그대로 업로드하셔도 되고, CSV로 저장해서 올리셔도 됩니다.</p></div><div class="import-actions"><a class="secondary-btn download-link" href="data:text/csv;charset=utf-8,%EF%BB%BF%EC%9E%90%EB%A6%AC%EB%B2%88%ED%98%B8,%ED%95%99%EC%83%9D%EC%9D%B4%EB%A6%84,%ED%95%99%EB%85%84%EB%B0%98,%EC%B6%9C%EC%84%9D%EC%B2%B4%ED%81%AC%EA%B6%8C%ED%95%9C,%EC%95%84%EC%9D%B4%EB%94%94,%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%0A1,%ED%99%8D%EA%B8%B8%EB%8F%99,1%ED%95%99%EB%85%84%201%EB%B0%98,%EC%95%84%EB%8B%88%EC%98%A4,student01,1234" download="자리_학생_일괄등록_양식.csv">CSV 양식 다운로드</a><label class="secondary-btn file-label" for="seat-import-file">엑셀/CSV 불러오기</label><input type="file" id="seat-import-file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"></div></div>
+            <div class="table-wrap"><table class="request-table"><thead><tr><th>자리 번호</th><th>학생 이름</th><th>학년/반</th><th>체크 권한</th><th>아이디</th><th>비밀번호</th><th>삭제</th></tr></thead><tbody id="seat-table-body"></tbody></table></div>
+          </article>
+        </section>
+        <section class="view" id="teacher-calendar">
+          <div class="panel-grid">
+            <article class="panel">
+              <div class="panel-head"><div><p class="panel-kicker">월별 출석부 생성</p><h2>운영 규칙 설정</h2></div></div>
+              <div class="calendar-config">
+                <label class="field"><span>대상 월</span><input type="month" id="calendar-month"></label>
+                <div class="field"><span>운영 요일</span><div class="weekday-grid" id="active-weekday-grid"></div></div>
+                <div class="field"><span>추가 제외 요일</span><div class="weekday-grid" id="excluded-weekday-grid"></div></div>
+                <label class="field"><span>추가 제외 날짜</span><input type="text" id="manual-excluded-dates" placeholder="예: 13, 26"></label>
+                <label class="field"><span>메모</span><textarea id="calendar-notes" rows="4" placeholder="예: 모의고사 주간, 행사일 제외"></textarea></label>
+                <div class="field"><div class="section-inline-head"><span>교시 설정</span><button class="secondary-btn" id="add-period-btn" type="button">교시 추가</button></div><div id="period-editor" class="period-editor"></div></div>
+              </div>
+              <div class="actions"><button class="primary-btn" id="generate-month-btn" type="button">해당 월 출석부 생성</button></div>
+            </article>
+            <article class="panel"><div class="panel-head"><div><p class="panel-kicker">제외 일정 미리보기</p><h2>생성 결과</h2></div></div><div id="calendar-preview" class="calendar-preview"></div></article>
+          </div>
+        </section>
+        <section class="view" id="teacher-attendance">
+          <article class="panel">
+            <div class="panel-head"><div><p class="panel-kicker">담당자용 체크 화면</p><h2>자리 번호로 교시별 출석 체크</h2></div><div class="panel-actions"><label class="inline-field"><span>월</span><input type="month" id="attendance-month"></label><label class="inline-field"><span>날짜</span><select id="attendance-date"></select></label></div></div>
+            <div class="attendance-summary" id="attendance-day-summary"></div><div class="seat-card-grid" id="attendance-seat-grid"></div>
+          </article>
+        </section>
+        <section class="view" id="teacher-requests">
+          <article class="panel">
+            <div class="panel-head"><div><p class="panel-kicker">학생 불참 신청</p><h2>승인 대기 목록</h2></div></div>
+            <div class="approval-settings"><label class="field"><span>승인 시 자동 불참 처리</span><select id="auto-absence-on-approval"><option value="true">예, 승인되면 자동으로 불참 처리</option><option value="false">아니요, 비고만 표시</option></select></label></div>
+            <div class="table-wrap"><table><thead><tr><th>신청일</th><th>학생</th><th>자리</th><th>대상 날짜</th><th>신청 교시</th><th>사유</th><th>상태</th><th>처리</th></tr></thead><tbody id="request-table-body"></tbody></table></div>
+          </article>
+        </section>
+        <section class="view" id="student-portal">
+          <div class="panel-grid student-grid">
+            <article class="panel"><div class="panel-head"><div><p class="panel-kicker">학생 로그인</p><h2>불참 신청</h2></div></div><form id="student-login-form" class="stack-form"><label class="field"><span>아이디</span><input type="text" id="student-login-id" required></label><label class="field"><span>비밀번호</span><input type="password" id="student-login-password" required></label><button class="primary-btn" type="submit">로그인</button></form><div id="student-session" class="student-session hidden"><div class="student-session-card"><p class="student-welcome" id="student-welcome"></p><button class="secondary-btn" id="student-logout-btn" type="button">로그아웃</button></div><form id="absence-request-form" class="stack-form"><label class="field"><span>불참 날짜</span><input type="date" id="student-request-date" required></label><label class="field"><span>사유</span><textarea id="student-request-reason" rows="4" required placeholder="예: 병원 진료, 학원 시험 일정"></textarea></label><button class="primary-btn" type="submit">불참 신청 제출</button></form></div></article>
+            <article class="panel"><div class="panel-head"><div><p class="panel-kicker">내 신청 내역</p><h2>신청 상태 확인</h2></div></div><div id="student-history-empty" class="empty-state">로그인하면 본인 신청 내역이 표시됩니다.</div><div class="table-wrap hidden" id="student-history-wrap"><table><thead><tr><th>대상 날짜</th><th>사유</th><th>상태</th></tr></thead><tbody id="student-history-body"></tbody></table></div></article>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+  <template id="seat-row-template"><tr><td><input type="number" min="1" class="seat-number-input"></td><td><input type="text" class="student-name-input" placeholder="학생 이름"></td><td><input type="text" class="student-class-input" placeholder="예: 2학년 3반"></td><td class="permission-cell"><label class="permission-toggle"><input type="checkbox" class="attendance-checker-input"><span>허용</span></label></td><td><input type="text" class="student-id-input" placeholder="자동 생성 가능"></td><td><input type="text" class="student-password-input" placeholder="자동 생성 가능"></td><td><button class="danger-btn remove-seat-btn" type="button">삭제</button></td></tr></template>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+  <script src="./shared-store.js"></script>
+  <script>document.getElementById("teacher-logout-btn")?.addEventListener("click",()=>{logoutSharedSession("teacher");location.replace("./teacher-login.html")});</script>
+  <script src="./app-1.js"></script><script src="./app-2.js"></script><script src="./app-3.js"></script><script src="./app-4.js"></script><script src="./app-5.js"></script><script src="./app-6.js"></script><script src="./app-7.js"></script>
+</body>
+</html>
