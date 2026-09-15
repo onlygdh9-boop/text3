@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=20260915-3">
   <script>if (!localStorage.getItem("jeongdoksil_teacher_token")) location.replace("./teacher-login.html");</script>
 </head>
 <body>
@@ -106,7 +106,7 @@
                 <p class="security-title">관리자 계정 보호</p>
                 <p class="security-desc">현재 비밀번호를 확인한 뒤 새 비밀번호로 변경합니다. 변경이 완료되면 기존 교사 로그인 세션은 모두 종료되고, 이 기기만 새 세션으로 유지됩니다.</p>
               </div>
-              <form id="teacher-password-form" class="stack-form security-form">
+              <form id="teacher-password-form" class="stack-form security-form" novalidate>
                 <label class="field">
                   <span>현재 비밀번호</span>
                   <input type="password" id="teacher-current-password" autocomplete="current-password" required>
@@ -121,7 +121,7 @@
                 </label>
                 <p class="security-help">6자 이상으로 설정해 주세요. 다른 서비스와 같은 비밀번호는 사용하지 않는 것을 권장합니다.</p>
                 <div class="security-message" id="teacher-password-message" role="status"></div>
-                <button class="primary-btn" type="submit">비밀번호 변경</button>
+                <button class="primary-btn" type="submit" id="teacher-password-submit">비밀번호 변경</button>
               </form>
             </div>
           </article>
@@ -138,33 +138,78 @@
   </div>
   <template id="seat-row-template"><tr><td><input type="number" min="1" class="seat-number-input"></td><td><input type="text" class="student-name-input" placeholder="학생 이름"></td><td><input type="text" class="student-class-input" placeholder="예: 2학년 3반"></td><td class="permission-cell"><label class="permission-toggle"><input type="checkbox" class="attendance-checker-input"><span>허용</span></label></td><td><input type="text" class="student-id-input" placeholder="자동 생성 가능"></td><td><input type="text" class="student-password-input" placeholder="자동 생성 가능"></td><td><button class="danger-btn remove-seat-btn" type="button">삭제</button></td></tr></template>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script src="./shared-store.js"></script>
+  <script src="./shared-store.js?v=20260915-3"></script>
   <script>
 document.getElementById("teacher-logout-btn")?.addEventListener("click",()=>{logoutSharedSession("teacher");location.replace("./teacher-login.html")});
 document.getElementById("teacher-password-form")?.addEventListener("submit",(event)=>{
   event.preventDefault();
-  const currentPassword=document.getElementById("teacher-current-password").value;
-  const newPassword=document.getElementById("teacher-new-password").value;
-  const confirmPassword=document.getElementById("teacher-new-password-confirm").value;
+
+  const currentInput=document.getElementById("teacher-current-password");
+  const newInput=document.getElementById("teacher-new-password");
+  const confirmInput=document.getElementById("teacher-new-password-confirm");
   const message=document.getElementById("teacher-password-message");
+  const submitButton=document.getElementById("teacher-password-submit");
+
+  const currentPassword=currentInput.value;
+  const newPassword=newInput.value;
+  const confirmPassword=confirmInput.value;
+
   message.className="security-message";
   message.textContent="";
+
+  if(!currentPassword){
+    message.classList.add("error");
+    message.textContent="현재 비밀번호를 입력해 주세요.";
+    currentInput.focus();
+    return;
+  }
+  if(!newPassword){
+    message.classList.add("error");
+    message.textContent="새 비밀번호를 입력해 주세요.";
+    newInput.focus();
+    return;
+  }
+  if(newPassword.length<6){
+    message.classList.add("error");
+    message.textContent="새 비밀번호는 6자 이상으로 입력해 주세요.";
+    newInput.focus();
+    return;
+  }
   if(newPassword!==confirmPassword){
     message.classList.add("error");
     message.textContent="새 비밀번호와 확인 값이 일치하지 않습니다.";
+    confirmInput.focus();
     return;
   }
-  const result=changeTeacherPasswordSync(currentPassword,newPassword);
-  if(result.ok){
-    message.classList.add("success");
-    message.textContent="비밀번호가 변경되었습니다. 다음 로그인부터 새 비밀번호를 사용하세요.";
-    event.target.reset();
-  }else{
+  if(typeof changeTeacherPasswordSync!=="function"){
     message.classList.add("error");
-    message.textContent=result.error||"비밀번호 변경에 실패했습니다.";
+    message.textContent="최신 보안 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.";
+    return;
+  }
+
+  submitButton.disabled=true;
+  submitButton.textContent="변경 중…";
+
+  try{
+    const result=changeTeacherPasswordSync(currentPassword,newPassword);
+    if(result.ok){
+      message.classList.add("success");
+      message.textContent="비밀번호가 변경되었습니다. 다음 로그인부터 새 비밀번호를 사용하세요.";
+      event.target.reset();
+    }else{
+      message.classList.add("error");
+      message.textContent=result.error||"비밀번호 변경에 실패했습니다.";
+    }
+  }catch(error){
+    console.error(error);
+    message.classList.add("error");
+    message.textContent="비밀번호 변경 중 오류가 발생했습니다. 다시 시도해 주세요.";
+  }finally{
+    submitButton.disabled=false;
+    submitButton.textContent="비밀번호 변경";
   }
 });
-</script>
-  <script src="./app-1.js"></script><script src="./app-2.js"></script><script src="./app-3.js"></script><script src="./app-4.js"></script><script src="./app-5.js"></script><script src="./app-6.js"></script><script src="./app-7.js"></script>
+</script></script>
+  <script src="./app-1.js?v=20260915-3"></script><script src="./app-2.js"></script><script src="./app-3.js"></script><script src="./app-4.js"></script><script src="./app-5.js"></script><script src="./app-6.js"></script><script src="./app-7.js"></script>
 </body>
 </html>
