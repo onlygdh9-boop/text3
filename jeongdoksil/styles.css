@@ -600,3 +600,53 @@ td input{min-height:38px}
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+
+
+/* Teacher security */
+.security-layout{
+  display:grid;
+  grid-template-columns:minmax(0,.85fr) minmax(320px,1.15fr);
+  gap:26px;
+  align-items:start;
+}
+.security-copy{
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(145deg,#f8f7f2,#f1f4ef);
+}
+.security-title{
+  margin:0 0 8px;
+  font-size:1.05rem;
+  font-weight:800;
+  color:var(--accent-deep);
+}
+.security-desc{
+  margin:0;
+  color:var(--muted);
+  line-height:1.75;
+}
+.security-form{
+  max-width:560px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+}
+.security-help{
+  margin:0;
+  color:var(--muted);
+  font-size:.86rem;
+  line-height:1.6;
+}
+.security-message{
+  min-height:22px;
+  font-size:.9rem;
+  font-weight:700;
+}
+.security-message.success{color:var(--ok)}
+.security-message.error{color:var(--danger)}
+@media(max-width:820px){
+  .security-layout{grid-template-columns:1fr}
+  .security-form{max-width:none}
+}
