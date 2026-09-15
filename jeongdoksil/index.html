@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=SUIT:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=20260915-3">
+  <link rel="stylesheet" href="./styles.css?v=20260915-4">
   <script>if (!localStorage.getItem("jeongdoksil_teacher_token")) location.replace("./teacher-login.html");</script>
 </head>
 <body>
@@ -138,17 +138,17 @@
   </div>
   <template id="seat-row-template"><tr><td><input type="number" min="1" class="seat-number-input"></td><td><input type="text" class="student-name-input" placeholder="학생 이름"></td><td><input type="text" class="student-class-input" placeholder="예: 2학년 3반"></td><td class="permission-cell"><label class="permission-toggle"><input type="checkbox" class="attendance-checker-input"><span>허용</span></label></td><td><input type="text" class="student-id-input" placeholder="자동 생성 가능"></td><td><input type="text" class="student-password-input" placeholder="자동 생성 가능"></td><td><button class="danger-btn remove-seat-btn" type="button">삭제</button></td></tr></template>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-  <script src="./shared-store.js?v=20260915-3"></script>
+  <script src="./shared-store.js?v=20260915-4"></script>
   <script>
 document.getElementById("teacher-logout-btn")?.addEventListener("click",()=>{logoutSharedSession("teacher");location.replace("./teacher-login.html")});
-document.getElementById("teacher-password-form")?.addEventListener("submit",(event)=>{
-  event.preventDefault();
+const teacherPasswordForm=document.getElementById("teacher-password-form");
+const teacherPasswordSubmit=document.getElementById("teacher-password-submit");
 
+function handleTeacherPasswordChange(){
   const currentInput=document.getElementById("teacher-current-password");
   const newInput=document.getElementById("teacher-new-password");
   const confirmInput=document.getElementById("teacher-new-password-confirm");
   const message=document.getElementById("teacher-password-message");
-  const submitButton=document.getElementById("teacher-password-submit");
 
   const currentPassword=currentInput.value;
   const newPassword=newInput.value;
@@ -183,31 +183,39 @@ document.getElementById("teacher-password-form")?.addEventListener("submit",(eve
   }
   if(typeof changeTeacherPasswordSync!=="function"){
     message.classList.add("error");
-    message.textContent="최신 보안 모듈을 불러오지 못했습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.";
+    message.textContent="최신 보안 모듈을 불러오지 못했습니다. 새로고침 후 다시 시도해 주세요.";
     return;
   }
 
-  submitButton.disabled=true;
-  submitButton.textContent="변경 중…";
+  teacherPasswordSubmit.disabled=true;
+  teacherPasswordSubmit.textContent="변경 중…";
+  message.textContent="비밀번호를 확인하고 있습니다…";
 
   try{
     const result=changeTeacherPasswordSync(currentPassword,newPassword);
+    message.className="security-message";
     if(result.ok){
       message.classList.add("success");
       message.textContent="비밀번호가 변경되었습니다. 다음 로그인부터 새 비밀번호를 사용하세요.";
-      event.target.reset();
+      teacherPasswordForm.reset();
     }else{
       message.classList.add("error");
       message.textContent=result.error||"비밀번호 변경에 실패했습니다.";
     }
   }catch(error){
     console.error(error);
-    message.classList.add("error");
+    message.className="security-message error";
     message.textContent="비밀번호 변경 중 오류가 발생했습니다. 다시 시도해 주세요.";
   }finally{
-    submitButton.disabled=false;
-    submitButton.textContent="비밀번호 변경";
+    teacherPasswordSubmit.disabled=false;
+    teacherPasswordSubmit.textContent="비밀번호 변경";
   }
+}
+
+teacherPasswordSubmit?.addEventListener("click",handleTeacherPasswordChange);
+teacherPasswordForm?.addEventListener("submit",(event)=>{
+  event.preventDefault();
+  handleTeacherPasswordChange();
 });
 </script></script>
   <script src="./app-1.js?v=20260915-3"></script><script src="./app-2.js"></script><script src="./app-3.js"></script><script src="./app-4.js"></script><script src="./app-5.js"></script><script src="./app-6.js"></script><script src="./app-7.js"></script>
