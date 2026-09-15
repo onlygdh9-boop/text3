@@ -99,3 +99,25 @@ function writeSharedStateSync(storageKey, nextState) {
 function readServerInfoSync() {
   return { mode: "supabase", provider: "Supabase", api: JEONGDOKSIL_API };
 }
+
+
+function changeTeacherPasswordSync(currentPassword, newPassword) {
+  const token = localStorage.getItem(TEACHER_TOKEN_KEY) || "";
+  if (!token) return { ok: false, error: "교사 로그인이 필요합니다." };
+
+  const result = requestJsonSync("change_teacher_password", {
+    currentPassword,
+    newPassword
+  }, token);
+
+  if (result.ok && result.body?.token) {
+    localStorage.setItem(TEACHER_TOKEN_KEY, result.body.token);
+    return { ok: true, message: result.body?.message || "비밀번호가 변경되었습니다." };
+  }
+
+  if (result.status === 401 && result.body?.error === "교사 로그인이 필요합니다.") {
+    localStorage.removeItem(TEACHER_TOKEN_KEY);
+  }
+
+  return { ok: false, error: result.body?.error || "비밀번호 변경에 실패했습니다." };
+}
