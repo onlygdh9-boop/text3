@@ -30,6 +30,7 @@
         <button class="nav-btn" data-view="teacher-calendar">출석부 생성</button>
         <button class="nav-btn" data-view="teacher-attendance">출석 체크</button>
         <button class="nav-btn" data-view="teacher-requests">불참 신청 승인</button>
+        <button class="nav-btn" data-view="teacher-security">교사 보안 설정</button>
         <button class="nav-btn" type="button" id="teacher-logout-btn">로그아웃</button>
       </aside>
       <section class="content">
@@ -92,6 +93,40 @@
             <div class="table-wrap"><table><thead><tr><th>신청일</th><th>학생</th><th>자리</th><th>대상 날짜</th><th>신청 교시</th><th>사유</th><th>상태</th><th>처리</th></tr></thead><tbody id="request-table-body"></tbody></table></div>
           </article>
         </section>
+        <section class="view" id="teacher-security">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Teacher Security</p>
+                <h2>교사 비밀번호 변경</h2>
+              </div>
+            </div>
+            <div class="security-layout">
+              <div class="security-copy">
+                <p class="security-title">관리자 계정 보호</p>
+                <p class="security-desc">현재 비밀번호를 확인한 뒤 새 비밀번호로 변경합니다. 변경이 완료되면 기존 교사 로그인 세션은 모두 종료되고, 이 기기만 새 세션으로 유지됩니다.</p>
+              </div>
+              <form id="teacher-password-form" class="stack-form security-form">
+                <label class="field">
+                  <span>현재 비밀번호</span>
+                  <input type="password" id="teacher-current-password" autocomplete="current-password" required>
+                </label>
+                <label class="field">
+                  <span>새 비밀번호</span>
+                  <input type="password" id="teacher-new-password" autocomplete="new-password" minlength="6" maxlength="64" required>
+                </label>
+                <label class="field">
+                  <span>새 비밀번호 확인</span>
+                  <input type="password" id="teacher-new-password-confirm" autocomplete="new-password" minlength="6" maxlength="64" required>
+                </label>
+                <p class="security-help">6자 이상으로 설정해 주세요. 다른 서비스와 같은 비밀번호는 사용하지 않는 것을 권장합니다.</p>
+                <div class="security-message" id="teacher-password-message" role="status"></div>
+                <button class="primary-btn" type="submit">비밀번호 변경</button>
+              </form>
+            </div>
+          </article>
+        </section>
+
         <section class="view" id="student-portal">
           <div class="panel-grid student-grid">
             <article class="panel"><div class="panel-head"><div><p class="panel-kicker">학생 로그인</p><h2>불참 신청</h2></div></div><form id="student-login-form" class="stack-form"><label class="field"><span>아이디</span><input type="text" id="student-login-id" required></label><label class="field"><span>비밀번호</span><input type="password" id="student-login-password" required></label><button class="primary-btn" type="submit">로그인</button></form><div id="student-session" class="student-session hidden"><div class="student-session-card"><p class="student-welcome" id="student-welcome"></p><button class="secondary-btn" id="student-logout-btn" type="button">로그아웃</button></div><form id="absence-request-form" class="stack-form"><label class="field"><span>불참 날짜</span><input type="date" id="student-request-date" required></label><label class="field"><span>사유</span><textarea id="student-request-reason" rows="4" required placeholder="예: 병원 진료, 학원 시험 일정"></textarea></label><button class="primary-btn" type="submit">불참 신청 제출</button></form></div></article>
@@ -104,7 +139,32 @@
   <template id="seat-row-template"><tr><td><input type="number" min="1" class="seat-number-input"></td><td><input type="text" class="student-name-input" placeholder="학생 이름"></td><td><input type="text" class="student-class-input" placeholder="예: 2학년 3반"></td><td class="permission-cell"><label class="permission-toggle"><input type="checkbox" class="attendance-checker-input"><span>허용</span></label></td><td><input type="text" class="student-id-input" placeholder="자동 생성 가능"></td><td><input type="text" class="student-password-input" placeholder="자동 생성 가능"></td><td><button class="danger-btn remove-seat-btn" type="button">삭제</button></td></tr></template>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script src="./shared-store.js"></script>
-  <script>document.getElementById("teacher-logout-btn")?.addEventListener("click",()=>{logoutSharedSession("teacher");location.replace("./teacher-login.html")});</script>
+  <script>
+document.getElementById("teacher-logout-btn")?.addEventListener("click",()=>{logoutSharedSession("teacher");location.replace("./teacher-login.html")});
+document.getElementById("teacher-password-form")?.addEventListener("submit",(event)=>{
+  event.preventDefault();
+  const currentPassword=document.getElementById("teacher-current-password").value;
+  const newPassword=document.getElementById("teacher-new-password").value;
+  const confirmPassword=document.getElementById("teacher-new-password-confirm").value;
+  const message=document.getElementById("teacher-password-message");
+  message.className="security-message";
+  message.textContent="";
+  if(newPassword!==confirmPassword){
+    message.classList.add("error");
+    message.textContent="새 비밀번호와 확인 값이 일치하지 않습니다.";
+    return;
+  }
+  const result=changeTeacherPasswordSync(currentPassword,newPassword);
+  if(result.ok){
+    message.classList.add("success");
+    message.textContent="비밀번호가 변경되었습니다. 다음 로그인부터 새 비밀번호를 사용하세요.";
+    event.target.reset();
+  }else{
+    message.classList.add("error");
+    message.textContent=result.error||"비밀번호 변경에 실패했습니다.";
+  }
+});
+</script>
   <script src="./app-1.js"></script><script src="./app-2.js"></script><script src="./app-3.js"></script><script src="./app-4.js"></script><script src="./app-5.js"></script><script src="./app-6.js"></script><script src="./app-7.js"></script>
 </body>
 </html>
