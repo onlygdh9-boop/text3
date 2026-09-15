@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정독실 교사용 로그인</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=SUIT:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./styles.css">
+<style>body{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card{width:min(440px,100%);background:#fff;border:1px solid rgba(69,52,35,.14);border-radius:18px;padding:30px;box-shadow:0 18px 40px rgba(95,65,36,.12)}.login-card h1{font-size:1.55rem;margin:4px 0 8px}.login-card p{color:#6f6256;line-height:1.6}.login-card form{display:grid;gap:14px;margin-top:24px}.login-card button{min-height:48px}.error{min-height:22px;color:#a53d35;font-size:.9rem}.student-link{display:block;text-align:center;margin-top:18px;color:#56684f}</style>
+</head>
+<body>
+<main class="login-card">
+<p class="panel-kicker">Teacher Access</p><h1>정독실 교사용 로그인</h1><p>관리자 화면은 교사 비밀번호로 보호됩니다.</p>
+<form id="login-form"><label class="field"><span>교사 비밀번호</span><input id="teacher-password" type="password" autocomplete="current-password" required autofocus></label><div class="error" id="error" role="alert"></div><button class="primary-btn" type="submit">로그인</button></form>
+<a class="student-link" href="./student.html">학생용 화면으로 이동</a>
+</main>
+<script src="./shared-store.js"></script>
+<script>if(localStorage.getItem(TEACHER_TOKEN_KEY)){location.replace('./index.html')}document.getElementById('login-form').addEventListener('submit',e=>{e.preventDefault();const err=document.getElementById('error');err.textContent='';const ok=teacherLoginSync(document.getElementById('teacher-password').value);if(ok){location.replace('./index.html')}else{err.textContent='비밀번호가 올바르지 않거나 서버에 연결할 수 없습니다.'}});</script>
+</body></html>
