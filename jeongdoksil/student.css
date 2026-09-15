@@ -1,1 +1,43 @@
-.student-hero{margin-bottom:20px}.student-page-grid{align-items:start}.student-attendance-meta{display:grid;gap:10px;margin-bottom:14px}.student-attendance-note{margin:0;padding:12px 14px;background:#faf6ed;border:1px solid var(--line);border-radius:12px;color:var(--muted)}#student-page-attendance-panel .seat-card-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}@media(max-width:680px){#student-page-attendance-panel .seat-card-grid{grid-template-columns:1fr}}
+
+.student-body{background:linear-gradient(180deg,#f8f7f2 0%,#f2f1eb 100%)}
+.student-shell{max-width:1240px}
+.student-hero{
+  margin-bottom:22px;
+  background:linear-gradient(145deg,rgba(255,253,249,.98),rgba(246,248,244,.96))
+}
+.student-hero::before{
+  content:"";
+  width:8px;
+  height:52px;
+  border-radius:999px;
+  background:var(--accent);
+  flex:0 0 auto;
+}
+.student-hero>div{position:relative;z-index:1}
+.student-main{gap:20px}
+.student-login-panel{
+  max-width:540px;
+  margin:30px auto 0;
+  padding:28px
+}
+.student-page-grid{align-items:start}
+.student-attendance-meta{display:grid;gap:10px;margin-bottom:15px}
+.student-attendance-note{
+  margin:0;
+  padding:12px 14px;
+  background:var(--accent-soft);
+  border:1px solid #d6e0d7;
+  border-radius:12px;
+  color:var(--accent-deep);
+  font-size:.9rem
+}
+#student-page-attendance-panel .seat-card-grid{grid-template-columns:repeat(auto-fit,minmax(285px,1fr))}
+#student-page-summary .stat-card:nth-child(1)::before{background:var(--rose)}
+#student-page-summary .stat-card:nth-child(2)::before{background:var(--accent)}
+#student-page-summary .stat-card:nth-child(3)::before{background:var(--warn)}
+#student-page-summary .stat-card:nth-child(4)::before{background:var(--ok)}
+@media(max-width:680px){
+  #student-page-attendance-panel .seat-card-grid{grid-template-columns:1fr}
+  .student-hero::before{display:none}
+  .student-login-panel{margin-top:10px}
+}
