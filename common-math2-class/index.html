@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="공통수학2 수업자료 - 명제, 함수, 유리함수와 무리함수">
+  <title>공통수학2 수업자료</title>
+  <style>
+    :root{--bg:#f7f4ed;--surface:#fffdfa;--border:#ded9ce;--text:#2d302c;--muted:#6f746d;--accent:#66785f;--accent-soft:#e8eee4;--focus:#395b34}
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+    body{overflow:hidden}
+    .skip{position:absolute;left:12px;top:-60px;z-index:100;padding:10px 14px;border-radius:10px;background:#fff;color:#111}
+    .skip:focus{top:12px}
+    header{height:72px;display:flex;align-items:center;gap:18px;padding:10px 18px;border-bottom:1px solid var(--border);background:rgba(255,253,250,.94);backdrop-filter:blur(8px)}
+    .brand{min-width:max-content;font-weight:750;font-size:17px;letter-spacing:-.02em}
+    .tabs{display:flex;align-items:center;gap:6px;min-width:0;overflow-x:auto;scrollbar-width:thin}
+    .tab{min-height:44px;padding:0 16px;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--muted);font:inherit;font-weight:650;white-space:nowrap;cursor:pointer}
+    .tab:hover{background:#f1eee6;color:var(--text)}
+    .tab[aria-selected="true"]{border-color:#ccd5c8;background:var(--accent-soft);color:#344330}
+    .tab:focus-visible{outline:3px solid color-mix(in srgb,var(--focus) 35%,transparent);outline-offset:2px}
+    main{height:calc(100vh - 72px);padding:10px}
+    .panel{width:100%;height:100%;border:1px solid var(--border);border-radius:16px;background:var(--surface);overflow:hidden}
+    iframe{display:block;width:100%;height:100%;border:0;background:#fff}
+    @media(max-width:720px){header{height:auto;min-height:72px;align-items:flex-start;flex-direction:column;gap:7px;padding:9px 10px}.brand{padding:0 4px}.tabs{width:100%}.tab{flex:1 0 auto;padding:0 13px}main{height:calc(100vh - 108px);padding:6px}.panel{border-radius:12px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<a class="skip" href="#lesson-frame">수업자료로 바로가기</a>
+<header>
+  <div class="brand">공통수학2 수업자료</div>
+  <nav class="tabs" role="tablist" aria-label="수업자료 단원">
+    <button class="tab" id="tab-proposition" role="tab" aria-selected="true" aria-controls="lesson-frame" data-key="proposition">명제</button>
+    <button class="tab" id="tab-function" role="tab" aria-selected="false" aria-controls="lesson-frame" data-key="function" tabindex="-1">함수</button>
+    <button class="tab" id="tab-rational" role="tab" aria-selected="false" aria-controls="lesson-frame" data-key="rational" tabindex="-1">유리함수·무리함수</button>
+  </nav>
+</header>
+<main>
+  <section class="panel" aria-label="선택한 수업자료">
+    <iframe id="lesson-frame" title="공통수학2 명제 수업자료" src="./lessons/proposition.html"></iframe>
+  </section>
+</main>
+<script>
+const lessons={
+ proposition:{src:'./lessons/proposition.html',title:'공통수학2 명제 수업자료'},
+ function:{src:'./lessons/function.html',title:'공통수학2 함수 수업자료'},
+ rational:{src:'./lessons/rational-irrational.html',title:'공통수학2 유리함수와 무리함수 수업자료'}
+};
+const tabs=[...document.querySelectorAll('.tab')],frame=document.getElementById('lesson-frame');
+function select(key,focus=false){
+ const item=lessons[key]||lessons.proposition;
+ tabs.forEach(t=>{const on=t.dataset.key===key;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;if(on&&focus)t.focus()});
+ if(frame.getAttribute('src')!==item.src) frame.src=item.src;
+ frame.title=item.title;
+ history.replaceState(null,'','#'+key);
+}
+tabs.forEach((t,i)=>{t.addEventListener('click',()=>select(t.dataset.key));t.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const d=e.key==='ArrowRight'?1:-1;const n=(i+d+tabs.length)%tabs.length;select(tabs[n].dataset.key,true)})});
+const initial=location.hash.slice(1);select(lessons[initial]?initial:'proposition');
+</script>
+</body>
+</html>
