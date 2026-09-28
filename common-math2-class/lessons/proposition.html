@@ -6561,20 +6561,68 @@ html&gt;body{padding:0}&lt;/style&gt;
       }
 
       function amgmConceptFigure() {
-        return `&lt;svg viewBox=&quot;0 0 800 305&quot; role=&quot;img&quot; aria-label=&quot;양수 a와 b의 산술평균은 기하평균 이상이며 등호는 a와 b가 같을 때 성립함&quot; style=&quot;width:100%;max-width:800px&quot;&gt;
-          &lt;title&gt;산술평균과 기하평균의 관계&lt;/title&gt;
-          &lt;desc&gt;a와 b가 양수일 때 a 더하기 b 나누기 2는 루트 ab 이상이고 등호는 a와 b가 같을 때 성립한다.&lt;/desc&gt;
-          &lt;rect x=&quot;55&quot; y=&quot;45&quot; width=&quot;690&quot; height=&quot;190&quot; rx=&quot;30&quot; fill=&quot;#f7fbff&quot; stroke=&quot;#bfd2ee&quot; stroke-width=&quot;4&quot;/&gt;
-          &lt;rect x=&quot;95&quot; y=&quot;88&quot; width=&quot;230&quot; height=&quot;92&quot; rx=&quot;22&quot; fill=&quot;#e8effc&quot; stroke=&quot;#4e7fd1&quot; stroke-width=&quot;4&quot;/&gt;
-          &lt;text x=&quot;210&quot; y=&quot;118&quot; text-anchor=&quot;middle&quot; font-size=&quot;20&quot; font-weight=&quot;900&quot; fill=&quot;#24466f&quot;&gt;산술평균&lt;/text&gt;
-          &lt;text x=&quot;210&quot; y=&quot;148&quot; text-anchor=&quot;middle&quot; font-size=&quot;25&quot; font-weight=&quot;900&quot;&gt;a+b&lt;/text&gt;
-          &lt;line x1=&quot;170&quot; y1=&quot;156&quot; x2=&quot;250&quot; y2=&quot;156&quot; stroke=&quot;#20313f&quot; stroke-width=&quot;3&quot;/&gt;
-          &lt;text x=&quot;210&quot; y=&quot;178&quot; text-anchor=&quot;middle&quot; font-size=&quot;23&quot; font-weight=&quot;900&quot;&gt;2&lt;/text&gt;
-          &lt;text x=&quot;400&quot; y=&quot;151&quot; text-anchor=&quot;middle&quot; font-size=&quot;42&quot; font-weight=&quot;900&quot; fill=&quot;#ed6b79&quot;&gt;≥&lt;/text&gt;
-          &lt;rect x=&quot;475&quot; y=&quot;88&quot; width=&quot;230&quot; height=&quot;92&quot; rx=&quot;22&quot; fill=&quot;#eaf7f5&quot; stroke=&quot;#23aa9c&quot; stroke-width=&quot;4&quot;/&gt;
-          &lt;text x=&quot;590&quot; y=&quot;122&quot; text-anchor=&quot;middle&quot; font-size=&quot;20&quot; font-weight=&quot;900&quot; fill=&quot;#166f68&quot;&gt;기하평균&lt;/text&gt;
-          ${svgMath(&#x27;√(ab)&#x27;,535,127,110,48,29)}
-          &lt;text x=&quot;400&quot; y=&quot;276&quot; text-anchor=&quot;middle&quot; font-size=&quot;21&quot; font-weight=&quot;900&quot; fill=&quot;#405568&quot;&gt;a&amp;gt;0, b&amp;gt;0　·　등호는 a=b일 때&lt;/text&gt;
+        return `&lt;svg viewBox=&quot;0 0 1000 650&quot; role=&quot;img&quot; aria-label=&quot;같은 둘레를 가진 직사각형과 정사각형의 넓이를 비교하여 산술평균이 기하평균 이상임을 설명하는 그림&quot; style=&quot;width:100%;max-width:1000px&quot;&gt;
+          &lt;title&gt;왜 산술평균이 기하평균보다 크거나 같을까?&lt;/title&gt;
+          &lt;desc&gt;가로가 a, 세로가 b인 직사각형과 둘레가 같은 정사각형을 비교한다. 정사각형의 한 변은 a 더하기 b 나누기 2이고, 같은 둘레를 가진 직사각형 중 정사각형의 넓이가 가장 크므로 ab는 a 더하기 b 나누기 2의 제곱 이하이다. 양수 조건에서 제곱근을 취하면 루트 ab는 a 더하기 b 나누기 2 이하이다. 등호는 a와 b가 같을 때 성립한다.&lt;/desc&gt;
+
+          &lt;rect x=&quot;18&quot; y=&quot;18&quot; width=&quot;964&quot; height=&quot;614&quot; rx=&quot;30&quot; fill=&quot;#fbfcfd&quot; stroke=&quot;#d6e0e8&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;text x=&quot;500&quot; y=&quot;60&quot; text-anchor=&quot;middle&quot; font-size=&quot;28&quot; font-weight=&quot;900&quot; fill=&quot;#173f63&quot;&gt;왜 산술평균이 기하평균보다 크거나 같을까?&lt;/text&gt;
+          &lt;text x=&quot;500&quot; y=&quot;91&quot; text-anchor=&quot;middle&quot; font-size=&quot;18&quot; font-weight=&quot;800&quot; fill=&quot;#607180&quot;&gt;같은 둘레를 가진 두 도형의 넓이를 비교해 보자.&lt;/text&gt;
+
+          &lt;rect x=&quot;38&quot; y=&quot;118&quot; width=&quot;286&quot; height=&quot;420&quot; rx=&quot;24&quot; fill=&quot;#f5f9ff&quot; stroke=&quot;#a9cdf4&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;circle cx=&quot;78&quot; cy=&quot;158&quot; r=&quot;25&quot; fill=&quot;#2f76c4&quot;/&gt;
+          &lt;text x=&quot;78&quot; y=&quot;167&quot; text-anchor=&quot;middle&quot; font-size=&quot;24&quot; font-weight=&quot;900&quot; fill=&quot;#fff&quot;&gt;1&lt;/text&gt;
+          &lt;text x=&quot;115&quot; y=&quot;166&quot; font-size=&quot;21&quot; font-weight=&quot;900&quot; fill=&quot;#24466f&quot;&gt;직사각형을 생각하자&lt;/text&gt;
+
+          &lt;rect x=&quot;82&quot; y=&quot;223&quot; width=&quot;198&quot; height=&quot;126&quot; fill=&quot;#dcecff&quot; stroke=&quot;#2f76c4&quot; stroke-width=&quot;4&quot;/&gt;
+          &lt;line x1=&quot;82&quot; y1=&quot;372&quot; x2=&quot;280&quot; y2=&quot;372&quot; stroke=&quot;#2f76c4&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;path d=&quot;M82 372l13-7v14zM280 372l-13-7v14z&quot; fill=&quot;#2f76c4&quot;/&gt;
+          ${svgMath(&#x27;a&#x27;,151,377,60,35,25,&#x27;#1f5fa8&#x27;)}
+          &lt;line x1=&quot;299&quot; y1=&quot;223&quot; x2=&quot;299&quot; y2=&quot;349&quot; stroke=&quot;#2f76c4&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;path d=&quot;M299 223l-7 13h14zM299 349l-7-13h14z&quot; fill=&quot;#2f76c4&quot;/&gt;
+          ${svgMath(&#x27;b&#x27;,302,267,48,40,25,&#x27;#1f5fa8&#x27;)}
+          &lt;rect x=&quot;60&quot; y=&quot;420&quot; width=&quot;242&quot; height=&quot;43&quot; rx=&quot;14&quot; fill=&quot;#eaf3fd&quot;/&gt;
+          ${svgMath(&#x27;둘레=2a+2b&#x27;,80,426,202,30,19,&#x27;#20313f&#x27;)}
+          &lt;rect x=&quot;60&quot; y=&quot;474&quot; width=&quot;242&quot; height=&quot;43&quot; rx=&quot;14&quot; fill=&quot;#eaf3fd&quot;/&gt;
+          ${svgMath(&#x27;넓이=ab&#x27;,91,480,180,30,20,&#x27;#20313f&#x27;)}
+
+          &lt;rect x=&quot;357&quot; y=&quot;118&quot; width=&quot;286&quot; height=&quot;420&quot; rx=&quot;24&quot; fill=&quot;#fff8f0&quot; stroke=&quot;#f0c48d&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;circle cx=&quot;397&quot; cy=&quot;158&quot; r=&quot;25&quot; fill=&quot;#e67a2d&quot;/&gt;
+          &lt;text x=&quot;397&quot; y=&quot;167&quot; text-anchor=&quot;middle&quot; font-size=&quot;24&quot; font-weight=&quot;900&quot; fill=&quot;#fff&quot;&gt;2&lt;/text&gt;
+          &lt;text x=&quot;434&quot; y=&quot;154&quot; font-size=&quot;20&quot; font-weight=&quot;900&quot; fill=&quot;#80531e&quot;&gt;같은 둘레의&lt;/text&gt;
+          &lt;text x=&quot;434&quot; y=&quot;178&quot; font-size=&quot;20&quot; font-weight=&quot;900&quot; fill=&quot;#80531e&quot;&gt;정사각형을 만들자&lt;/text&gt;
+
+          &lt;rect x=&quot;414&quot; y=&quot;221&quot; width=&quot;171&quot; height=&quot;171&quot; fill=&quot;#ffe4cd&quot; stroke=&quot;#e67a2d&quot; stroke-width=&quot;4&quot;/&gt;
+          &lt;line x1=&quot;414&quot; y1=&quot;414&quot; x2=&quot;585&quot; y2=&quot;414&quot; stroke=&quot;#e67a2d&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;path d=&quot;M414 414l13-7v14zM585 414l-13-7v14z&quot; fill=&quot;#e67a2d&quot;/&gt;
+          ${svgMath(&#x27;{a+b}/2&#x27;,451,421,98,44,21,&#x27;#b45309&#x27;)}
+          &lt;line x1=&quot;608&quot; y1=&quot;221&quot; x2=&quot;608&quot; y2=&quot;392&quot; stroke=&quot;#e67a2d&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;path d=&quot;M608 221l-7 13h14zM608 392l-7-13h14z&quot; fill=&quot;#e67a2d&quot;/&gt;
+          ${svgMath(&#x27;{a+b}/2&#x27;,612,282,88,52,19,&#x27;#b45309&#x27;)}
+          &lt;rect x=&quot;379&quot; y=&quot;474&quot; width=&quot;242&quot; height=&quot;43&quot; rx=&quot;14&quot; fill=&quot;#fff0df&quot;/&gt;
+          ${svgMath(&#x27;넓이=({a+b}/2)^2&#x27;,391,479,220,32,18,&#x27;#20313f&#x27;)}
+
+          &lt;path d=&quot;M324 325H357&quot; stroke=&quot;#d76557&quot; stroke-width=&quot;5&quot;/&gt;
+          &lt;path d=&quot;M348 313l16 12-16 12z&quot; fill=&quot;#d76557&quot;/&gt;
+          &lt;rect x=&quot;295&quot; y=&quot;275&quot; width=&quot;82&quot; height=&quot;38&quot; rx=&quot;12&quot; fill=&quot;#fff3f1&quot; stroke=&quot;#eb8a7d&quot; stroke-width=&quot;2&quot;/&gt;
+          &lt;text x=&quot;336&quot; y=&quot;300&quot; text-anchor=&quot;middle&quot; font-size=&quot;16&quot; font-weight=&quot;900&quot; fill=&quot;#a84337&quot;&gt;둘레가 같다&lt;/text&gt;
+
+          &lt;rect x=&quot;676&quot; y=&quot;118&quot; width=&quot;286&quot; height=&quot;420&quot; rx=&quot;24&quot; fill=&quot;#f3fbf5&quot; stroke=&quot;#a8d9b5&quot; stroke-width=&quot;3&quot;/&gt;
+          &lt;circle cx=&quot;716&quot; cy=&quot;158&quot; r=&quot;25&quot; fill=&quot;#32945a&quot;/&gt;
+          &lt;text x=&quot;716&quot; y=&quot;167&quot; text-anchor=&quot;middle&quot; font-size=&quot;24&quot; font-weight=&quot;900&quot; fill=&quot;#fff&quot;&gt;3&lt;/text&gt;
+          &lt;text x=&quot;753&quot; y=&quot;166&quot; font-size=&quot;21&quot; font-weight=&quot;900&quot; fill=&quot;#25653e&quot;&gt;넓이를 비교하자&lt;/text&gt;
+          &lt;rect x=&quot;696&quot; y=&quot;201&quot; width=&quot;246&quot; height=&quot;75&quot; rx=&quot;17&quot; fill=&quot;#e3f5e8&quot;/&gt;
+          &lt;text x=&quot;819&quot; y=&quot;229&quot; text-anchor=&quot;middle&quot; font-size=&quot;17&quot; font-weight=&quot;850&quot; fill=&quot;#315a3e&quot;&gt;같은 둘레를 가진 직사각형 중&lt;/text&gt;
+          &lt;text x=&quot;819&quot; y=&quot;253&quot; text-anchor=&quot;middle&quot; font-size=&quot;17&quot; font-weight=&quot;850&quot; fill=&quot;#315a3e&quot;&gt;정사각형의 넓이가 가장 크다.&lt;/text&gt;
+          &lt;rect x=&quot;696&quot; y=&quot;296&quot; width=&quot;246&quot; height=&quot;77&quot; rx=&quot;17&quot; fill=&quot;#eef5fb&quot;/&gt;
+          ${svgMath(&#x27;ab≤({a+b}/2)^2&#x27;,713,311,212,46,22,&#x27;#20313f&#x27;)}
+          &lt;text x=&quot;819&quot; y=&quot;397&quot; text-anchor=&quot;middle&quot; font-size=&quot;17&quot; font-weight=&quot;850&quot; fill=&quot;#405568&quot;&gt;a, b가 양수이므로 제곱근을 취하면&lt;/text&gt;
+          &lt;rect x=&quot;696&quot; y=&quot;414&quot; width=&quot;246&quot; height=&quot;77&quot; rx=&quot;17&quot; fill=&quot;#fff7df&quot; stroke=&quot;#e0b84f&quot; stroke-width=&quot;3&quot;/&gt;
+          ${svgMath(&#x27;√(ab)≤{a+b}/2&#x27;,711,429,216,46,23,&#x27;#b43b35&#x27;)}
+          &lt;text x=&quot;819&quot; y=&quot;517&quot; text-anchor=&quot;middle&quot; font-size=&quot;19&quot; font-weight=&quot;900&quot; fill=&quot;#b43b35&quot;&gt;기하평균 ≤ 산술평균&lt;/text&gt;
+
+          &lt;rect x=&quot;80&quot; y=&quot;562&quot; width=&quot;840&quot; height=&quot;46&quot; rx=&quot;16&quot; fill=&quot;#f4f0ff&quot; stroke=&quot;#d7c9f5&quot; stroke-width=&quot;2&quot;/&gt;
+          &lt;text x=&quot;500&quot; y=&quot;591&quot; text-anchor=&quot;middle&quot; font-size=&quot;18&quot; font-weight=&quot;850&quot; fill=&quot;#534879&quot;&gt;a=b일 때 직사각형이 정사각형이 되어 두 넓이가 같고, 이때만 등호가 성립한다.&lt;/text&gt;
         &lt;/svg&gt;`;
       }
 
