@@ -7344,6 +7344,43 @@ html&gt;body{padding:0}&lt;/style&gt;
             step(&#x27;③ |x-1|≥0을 판단한다&#x27;,`&lt;p&gt;절댓값은 수직선에서 두 점 사이의 거리이므로 항상 0 이상이다. 따라서 ③은 항상 성립한다.&lt;/p&gt;${answer(&#x27;모든 실수 x에 대하여 항상 성립하는 부등식은 ①, ③이다.&#x27;)}`)
           ]}),
           card({id:&#x27;p93-absolute&#x27;,page:93,label:&#x27;개념&#x27;,title:&#x27;절대부등식&#x27;,body:textbookOriginal(&#x27;&lt;p&gt;앞의 생각 열기에서 두 부등식 x²+1&amp;gt;0과 |x-1|≥0은 모든 실수 x에 대하여 항상 성립한다. 이와 같이 &lt;strong&gt;주어진 집합의 모든 원소에 대하여 항상 성립하는 부등식&lt;/strong&gt;을 &lt;strong&gt;절대부등식&lt;/strong&gt;이라고 한다.&lt;/p&gt;&lt;p&gt;절대부등식을 증명할 때 다음과 같은 성질이 자주 이용된다.&lt;/p&gt;&#x27;),visual:absolutePropertiesFigure()}),
+          card({id:&#x27;p93-inequality-guide&#x27;,page:93,label:&#x27;지도 자료&#x27;,kind:&#x27;concept&#x27;,title:&#x27;알아두면 유용한 부등식&#x27;,body:`
+            &lt;section aria-label=&quot;코시–슈바르츠 부등식&quot;&gt;
+              &lt;p&gt;&lt;strong&gt;(1) 코시–슈바르츠 부등식&lt;/strong&gt;&lt;/p&gt;
+              &lt;p&gt;a, b, x, y가 실수일 때,&lt;/p&gt;
+              ${formula(&#x27;(a²+b²)(x²+y²)≥(ax+by)²&#x27;)}
+              &lt;p&gt;등호는 ay=bx일 때 성립한다.&lt;/p&gt;
+              &lt;div class=&quot;example-strip&quot;&gt;
+                &lt;p&gt;&lt;strong&gt;예시&lt;/strong&gt;　a=1, b=2, x=3, y=4일 때&lt;/p&gt;
+                ${formula(&#x27;(1²+2²)(3²+4²)=125&#x27;)}
+                ${formula(&#x27;(1×3+2×4)²=121&#x27;)}
+                &lt;p&gt;따라서 125≥121이 성립한다.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/section&gt;
+            &lt;section aria-label=&quot;세 실수의 부등식&quot;&gt;
+              &lt;p&gt;&lt;strong&gt;(2) 세 실수의 부등식&lt;/strong&gt;&lt;/p&gt;
+              &lt;p&gt;a, b, c가 실수일 때,&lt;/p&gt;
+              ${formula(&#x27;a²+b²+c²≥ab+bc+ca&#x27;)}
+              &lt;p&gt;등호는 a=b=c일 때 성립한다.&lt;/p&gt;
+              &lt;div class=&quot;example-strip&quot;&gt;
+                &lt;p&gt;&lt;strong&gt;예시&lt;/strong&gt;　a=1, b=2, c=3일 때&lt;/p&gt;
+                ${formula(&#x27;1²+2²+3²=14&#x27;)}
+                ${formula(&#x27;1×2+2×3+3×1=11&#x27;)}
+                &lt;p&gt;따라서 14≥11이 성립한다.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/section&gt;
+            &lt;section aria-label=&quot;제곱근의 부등식&quot;&gt;
+              &lt;p&gt;&lt;strong&gt;(3) 제곱근의 부등식&lt;/strong&gt;&lt;/p&gt;
+              &lt;p&gt;a&amp;gt;0, b&amp;gt;0일 때,&lt;/p&gt;
+              ${formula(&#x27;√a+√b&gt;√(a+b)&#x27;)}
+              &lt;p&gt;양수 조건에서는 등호가 성립하지 않는다.&lt;/p&gt;
+              &lt;div class=&quot;example-strip&quot;&gt;
+                &lt;p&gt;&lt;strong&gt;예시&lt;/strong&gt;　a=9, b=16일 때&lt;/p&gt;
+                ${formula(&#x27;√9+√16=7&#x27;)}
+                ${formula(&#x27;√(9+16)=5&#x27;)}
+                &lt;p&gt;따라서 7&amp;gt;5가 성립한다.&lt;/p&gt;
+              &lt;/div&gt;
+            &lt;/section&gt;`,steps:[]}),
           card({id:&#x27;p93-example3&#x27;,page:93,label:&#x27;예제 3&#x27;,kind:&#x27;example&#x27;,title:&#x27;a와 b가 실수일 때, 부등식 a²+b²≥ab가 성립함을 증명하시오&#x27;,body:textbookOriginal(&#x27;&lt;p&gt;a와 b가 실수일 때, 부등식 a²+b²≥ab가 성립함을 증명하시오.&lt;/p&gt;&#x27;),visual:inequalityProofRouteFigure(),visualFirst:true,steps:[
             step(&#x27;좌변에서 우변을 빼서 0 이상인지 확인한다&#x27;,`&lt;p&gt;a²+b²≥ab를 증명하려면 a²-ab+b²≥0임을 보이면 된다.&lt;/p&gt;${formula(&#x27;a²-ab+b²&#x27;)}`),
             step(&#x27;a에 관한 완전제곱식으로 만든다&#x27;,`&lt;p&gt;a²-ab에서 a의 계수 -b의 절반은 -b/2이다.&lt;/p&gt;${formula(&#x27;a²-ab+b²=(a-b/2)²+3b²/4&#x27;)}`),
