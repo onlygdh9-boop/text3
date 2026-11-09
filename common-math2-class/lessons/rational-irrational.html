@@ -7907,7 +7907,7 @@ html&gt;body{padding:0}&lt;/style&gt;
               &quot;id&quot;: &quot;p130-negative-family&quot;,
               &quot;type&quot;: &quot;function&quot;,
               &quot;label&quot;: &quot;x축에 대하여 대칭이동한 무리함수 그래프&quot;,
-              &quot;expression&quot;: &quot;-sqrt(x)&quot;,
+              &quot;expression&quot;: &quot;-sqrt(2*x)&quot;,
               &quot;domain&quot;: [
                 0,
                 6
@@ -7918,11 +7918,11 @@ html&gt;body{padding:0}&lt;/style&gt;
                   0
                 ],
                 [
-                  1,
+                  0.5,
                   -1
                 ],
                 [
-                  4,
+                  2,
                   -2
                 ]
               ],
@@ -7957,6 +7957,11 @@ html&gt;body{padding:0}&lt;/style&gt;
                   &quot;label_point&quot;: [
                     -3.8,
                     -2.8
+                  ],
+                  &quot;key_x&quot;: [
+                    0,
+                    -0.5,
+                    -2
                   ]
                 }
               ],
@@ -10441,8 +10446,19 @@ html&gt;body{padding:0}&lt;/style&gt;
       active.series.forEach((series,index)=&gt;{
         const seriesClass=series.role===&#x27;base&#x27;?&#x27;line-reference&#x27;:series.role===&#x27;shifted&#x27;?&#x27;line-b&#x27;:classes[index % classes.length];
         drawExpression(series.expression, [series.domain || xr], seriesClass);
+        // Point heights and colors come from the same series as the curve.
+        const keyX = series.key_x || (series.expression === active.expression ? (active.key_points || []).map(([px]) =&gt; px) : []);
+        const fn = compileExpression(series.expression);
+        const domain = series.domain || xr;
+        const curve = svg.querySelector(`path.${seriesClass}`);
+        keyX.forEach(px =&gt; {
+          if (px &lt; domain[0] || px &gt; domain[1]) return;
+          let py;
+          try { py = fn(px,Math.sqrt,Math.abs,Math.sin,Math.cos,Math.tan,Math.exp,Math.log,Math.PI); } catch { return; }
+          if (!Number.isFinite(py) || px &lt; xr[0] || px &gt; xr[1] || py &lt; yr[0] || py &gt; yr[1]) return;
+          add(&#x27;circle&#x27;,{cx:X(px),cy:Y(py),r:5,class:&#x27;series-key-point&#x27;,style:`fill:${curve ? getComputedStyle(curve).stroke : &#x27;currentColor&#x27;}`});
+        });
       });
-      (active.key_points||[]).forEach(([px,py])=&gt;add(&#x27;circle&#x27;,{cx:X(px),cy:Y(py),r:5,class:&#x27;point-a&#x27;}));
     } else {
       drawExpression(expression, active.domain_segments || [active.domain || xr], (isParent || isXShift) ? &#x27;line-reference&#x27; : &#x27;line-a&#x27;);
       const points = spec.parameter &amp;&amp; parameter !== 0 ? spec.parameter.key_x.map(value=&gt;[value,parameter/value]) : (active.key_points||[]);
