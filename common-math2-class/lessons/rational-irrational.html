@@ -1588,6 +1588,29 @@ html&gt;body{padding:0}&lt;/style&gt;
     }
     #function-classroom .visual { display: grid; gap: 14px; }
     #function-classroom .step-list { display: grid; gap: 12px; }
+
+    /* 단계별 역함수 대응 그림: 기존 단계 진행 구조는 변경하지 않습니다. */
+    #function-classroom .mapping-figure {
+      width: min(100%, 660px); margin: 12px auto 4px; padding: 14px 18px 16px;
+      border: 1px solid #d5dfd7; border-radius: 15px; background: #fcfbf6;
+    }
+    #function-classroom .mapping-figure figcaption {
+      margin: 0 0 6px; font-size: 17px; line-height: 1.5;
+      font-weight: 850; color: #3b6454;
+    }
+    #function-classroom .mapping-figure .mapping-svg {
+      display:block; margin:0 auto; width:100%; max-width:500px; height:auto;
+    }
+    #function-classroom .mapping-figure .mapping-note {
+      margin: 6px 0 0; text-align:center; color:#35624e;
+      font-size:15px; font-weight:800; line-height:1.5;
+    }
+    @media(max-width:600px) {
+      #function-classroom .mapping-figure { padding: 10px 8px 12px; }
+      #function-classroom .mapping-figure figcaption { font-size: 15px; padding: 0 6px; }
+      #function-classroom .mapping-figure .mapping-note { font-size: 14px; }
+    }
+
     #function-classroom .step-list .step-card { display: grid; gap: 10px; padding: 16px; background: linear-gradient(180deg,rgba(255,255,255,.97),rgba(250,255,253,.97)); box-shadow: 0 8px 20px rgba(31,54,66,.05); }
     #function-classroom .step-list [data-step-card][hidden] { display: none !important; }
     #function-classroom .step-list .step-label { color: var(--lesson-mint-dark); font-size: 21px; line-height: 1.4; font-weight: 900; }
@@ -9573,13 +9596,92 @@ html&gt;body{padding:0}&lt;/style&gt;
             {
               &quot;title&quot;: &quot;3단계: 이미 정해진 대응을 한 줄씩 모읍니다&quot;,
               &quot;text&quot;: &quot;입력 1, 2, 3, 5의 함수값을 정리하면 출력 1, 2, 3, 4가 각각 한 번씩 사용되었습니다.&quot;,
-              &quot;html&quot;: &quot;&lt;p&gt;입력 1, 2, 3, 5의 함수값을 정리하면 출력 1, 2, 3, 4가 각각 한 번씩 사용되었습니다.&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;정해진 네 대응\&quot;&gt;&lt;mtable columnalign='left' columnspacing='1.8em' rowspacing='0.7em'&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;입력 1, 2, 3, 5의 함수값을 정리하면 출력 1, 2, 3, 4가 각각 한 번씩 사용되었습니다.&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;정해진 네 대응\&quot;&gt;&lt;mtable columnalign='left' columnspacing='1.8em' rowspacing='0.7em'&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;mo&gt;→&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/math&gt;&lt;figure class='mapping-figure'&gt;
+    &lt;figcaption&gt;화살표로 보는 함수의 대응 관계&lt;/figcaption&gt;
+    &lt;svg class='mapping-svg' viewBox='0 0 460 292' role='img' aria-labelledby='mapping-title-3 mapping-description-3'&gt;
+      &lt;title id='mapping-title-3'&gt;이미 정해진 네 가지 입력과 출력의 대응&lt;/title&gt;&lt;desc id='mapping-description-3'&gt;1에서 3로, 2에서 4로, 3에서 2로, 5에서 1로 대응합니다.&lt;/desc&gt;
+      &lt;text x='101' y='31' text-anchor='middle' fill='#54695c' font-size='18' font-weight='800'&gt;입력&lt;/text&gt;
+      &lt;text x='359' y='31' text-anchor='middle' fill='#54695c' font-size='18' font-weight='800'&gt;출력&lt;/text&gt;
+      &lt;rect x='46' y='46' width='368' height='46' rx='13' fill='#f2f6f0'/&gt;
+      &lt;circle cx='101' cy='69' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='69' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 69 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 62 L 311 69 L 300 76' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='76' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;1&lt;/text&gt;
+      &lt;text x='359' y='76' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;3&lt;/text&gt;
+&lt;rect x='46' y='97' width='368' height='46' rx='13' fill='#fafaf6'/&gt;
+      &lt;circle cx='101' cy='120' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='120' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 120 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 113 L 311 120 L 300 127' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='127' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;2&lt;/text&gt;
+      &lt;text x='359' y='127' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;4&lt;/text&gt;
+&lt;rect x='46' y='148' width='368' height='46' rx='13' fill='#f2f6f0'/&gt;
+      &lt;circle cx='101' cy='171' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='171' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 171 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 164 L 311 171 L 300 178' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='178' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;3&lt;/text&gt;
+      &lt;text x='359' y='178' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;2&lt;/text&gt;
+&lt;rect x='46' y='199' width='368' height='46' rx='13' fill='#fafaf6'/&gt;
+      &lt;circle cx='101' cy='222' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='222' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 222 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 215 L 311 222 L 300 229' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='229' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;5&lt;/text&gt;
+      &lt;text x='359' y='229' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;1&lt;/text&gt;
+    &lt;/svg&gt;
+    
+  &lt;/figure&gt;&quot;,
               &quot;phase&quot;: &quot;reason&quot;
             },
             {
               &quot;title&quot;: &quot;4단계: 남은 대응을 완성합니다&quot;,
               &quot;text&quot;: &quot;역함수가 존재하려면 서로 다른 입력이 서로 다른 출력에 대응해야 합니다. 아직 사용하지 않은 출력은 5이므로 f(4)=5입니다.&quot;,
-              &quot;html&quot;: &quot;&lt;p&gt;역함수가 존재하려면 서로 다른 입력이 서로 다른 출력에 대응해야 합니다. 아직 사용하지 않은 출력은 5이므로 f(4)=5입니다.&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 사는 오\&quot;&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;역함수가 존재하려면 서로 다른 입력이 서로 다른 출력에 대응해야 합니다. 아직 사용하지 않은 출력은 5이므로 f(4)=5입니다.&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 사는 오\&quot;&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;5&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;figure class='mapping-figure'&gt;
+    &lt;figcaption&gt;완성된 함수의 대응 관계&lt;/figcaption&gt;
+    &lt;svg class='mapping-svg' viewBox='0 0 460 343' role='img' aria-labelledby='mapping-title-4 mapping-description-4'&gt;
+      &lt;title id='mapping-title-4'&gt;모든 입력과 출력의 일대일 대응&lt;/title&gt;&lt;desc id='mapping-description-4'&gt;1에서 3로, 2에서 4로, 3에서 2로, 4에서 5로, 5에서 1로 대응합니다.&lt;/desc&gt;
+      &lt;text x='101' y='31' text-anchor='middle' fill='#54695c' font-size='18' font-weight='800'&gt;입력&lt;/text&gt;
+      &lt;text x='359' y='31' text-anchor='middle' fill='#54695c' font-size='18' font-weight='800'&gt;출력&lt;/text&gt;
+      &lt;rect x='46' y='46' width='368' height='46' rx='13' fill='#f2f6f0'/&gt;
+      &lt;circle cx='101' cy='69' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='69' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 69 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 62 L 311 69 L 300 76' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='76' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;1&lt;/text&gt;
+      &lt;text x='359' y='76' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;3&lt;/text&gt;
+&lt;rect x='46' y='97' width='368' height='46' rx='13' fill='#fafaf6'/&gt;
+      &lt;circle cx='101' cy='120' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='120' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 120 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 113 L 311 120 L 300 127' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='127' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;2&lt;/text&gt;
+      &lt;text x='359' y='127' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;4&lt;/text&gt;
+&lt;rect x='46' y='148' width='368' height='46' rx='13' fill='#f2f6f0'/&gt;
+      &lt;circle cx='101' cy='171' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='171' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 171 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 164 L 311 171 L 300 178' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='178' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;3&lt;/text&gt;
+      &lt;text x='359' y='178' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;2&lt;/text&gt;
+&lt;rect x='46' y='199' width='368' height='46' rx='13' fill='#e6efe5'/&gt;
+      &lt;circle cx='101' cy='222' r='19' fill='#d8e9d9' stroke='#5d8565' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='222' r='19' fill='#d8e9d9' stroke='#5d8565' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 222 H 311' stroke='#477c57' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 215 L 311 222 L 300 229' stroke='#477c57' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='229' text-anchor='middle' font-size='23' font-weight='750' fill='#23563d'&gt;4&lt;/text&gt;
+      &lt;text x='359' y='229' text-anchor='middle' font-size='23' font-weight='750' fill='#23563d'&gt;5&lt;/text&gt;
+&lt;rect x='46' y='250' width='368' height='46' rx='13' fill='#f2f6f0'/&gt;
+      &lt;circle cx='101' cy='273' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;circle cx='359' cy='273' r='19' fill='#ffffff' stroke='#8ca99b' stroke-width='1.7'/&gt;
+      &lt;path d='M 142 273 H 311' stroke='#779887' stroke-width='3.4' stroke-linecap='round' fill='none'/&gt;
+      &lt;path d='M 300 266 L 311 273 L 300 280' stroke='#779887' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round' fill='none'/&gt;
+      &lt;text x='101' y='280' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;5&lt;/text&gt;
+      &lt;text x='359' y='280' text-anchor='middle' font-size='23' font-weight='750' fill='#2e4f46'&gt;1&lt;/text&gt;
+    &lt;/svg&gt;
+    &lt;div class='mapping-note'&gt;마지막 남은 대응: 4 → 5&lt;/div&gt;
+  &lt;/figure&gt;&quot;,
               &quot;phase&quot;: &quot;reason&quot;
             },
             {
