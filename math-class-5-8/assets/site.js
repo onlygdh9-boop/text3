@@ -1,0 +1,10 @@
+(()=>{'use strict';
+const toggle=document.querySelector('.site-toggle'),nav=document.querySelector('.site-navigation');
+if(!toggle||!nav)return;
+const close=()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-open');};
+toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open);});
+nav.addEventListener('click',event=>{if(event.target.closest('a'))close();});
+document.addEventListener('keydown',event=>{if(event.key==='Escape'){const wasOpen=toggle.getAttribute('aria-expanded')==='true';close();if(wasOpen)toggle.focus();}});
+document.addEventListener('click',event=>{if(!nav.contains(event.target)&&!toggle.contains(event.target))close();});
+window.addEventListener('resize',()=>{if(window.innerWidth>760)close();});
+})();
