@@ -9305,14 +9305,15 @@ html&gt;body{padding:0}&lt;/style&gt;
       &quot;id&quot;: &quot;review&quot;,
       &quot;title&quot;: &quot;중단원 및 대단원 마무리 문제&quot;,
       &quot;pages&quot;: &quot;134, 137&quot;,
-      &quot;objective&quot;: &quot;중단원 10·11번과 대단원 8·9·11번을 단계별로 해결한다.&quot;,
-      &quot;route&quot;: &quot;중단원 10 → 중단원 11 → 대단원 8 → 대단원 9 → 대단원 11&quot;,
-      &quot;principle&quot;: &quot;지정된 다섯 문제만 다루고, 식과 조건을 한 판단씩 확인한 뒤 마지막에 답을 정리한다.&quot;,
+      &quot;objective&quot;: &quot;중단원 10·11번, 추가 05번과 대단원 8·9·11번을 단계별로 해결한다.&quot;,
+      &quot;route&quot;: &quot;중단원 10 → 중단원 11 → 추가 05 → 대단원 8 → 대단원 9 → 대단원 11&quot;,
+      &quot;principle&quot;: &quot;지정된 여섯 문제를 다루고, 식과 조건을 한 판단씩 확인한 뒤 마지막에 답을 정리한다.&quot;,
       &quot;selection_contract&quot;: {
         &quot;exact&quot;: true,
         &quot;allowed_card_ids&quot;: [
           &quot;middle10&quot;,
           &quot;middle11&quot;,
+          &quot;chapter05-extra&quot;,
           &quot;chapter08&quot;,
           &quot;chapter09&quot;,
           &quot;chapter11&quot;
@@ -9556,6 +9557,83 @@ html&gt;body{padding:0}&lt;/style&gt;
             &quot;실수&quot;
           ],
           &quot;visual_mode&quot;: &quot;formula-graph-sequence&quot;,
+          &quot;solution_detail_contract&quot;: {
+            &quot;audience&quot;: &quot;beginner&quot;,
+            &quot;one_judgment_per_step&quot;: true,
+            &quot;reason_before_result&quot;: true,
+            &quot;answer_last&quot;: true,
+            &quot;min_total_reasoning_steps&quot;: 5,
+            &quot;min_steps_per_subproblem&quot;: 0,
+            &quot;required_cues&quot;: [
+              &quot;무엇을 확인하는가&quot;,
+              &quot;왜 이 식을 쓰는가&quot;,
+              &quot;계산 또는 그래프 확인&quot;,
+              &quot;최종 확인&quot;
+            ]
+          }
+        },
+        {
+          &quot;id&quot;: &quot;chapter05-extra&quot;,
+          &quot;page&quot;: &quot;137&quot;,
+          &quot;kind&quot;: &quot;problem&quot;,
+          &quot;number&quot;: &quot;05 · 추가&quot;,
+          &quot;title&quot;: &quot;함수의 반복 합성과 주기 찾기&quot;,
+          &quot;problem_original&quot;: &quot;추가 문제 05 집합 X={0, 2, 4, 6} 함수 f:X→X, f(x)=x+2 (x≤4), f(6)=0, f²=f∘f, f³=f∘f², …, fⁿ⁺¹=f∘fⁿ, f²⁶(6)+f²⁷(0)의 값은? ① 2 ② 4 ③ 6 ④ 8 ⑤ 10&quot;,
+          &quot;formulas&quot;: [],
+          &quot;graphs&quot;: [],
+          &quot;steps&quot;: [
+            {
+              &quot;title&quot;: &quot;1단계: 함수의 대응을 차례로 확인합니다&quot;,
+              &quot;text&quot;: &quot;주어진 함수에 0, 2, 4, 6을 차례대로 넣으면 네 값이 순환합니다.&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;f(0)=2, f(2)=4, f(4)=6, f(6)=0입니다.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;0 → 2 → 4 → 6 → 0&lt;/strong&gt;&lt;/p&gt;&quot;,
+              &quot;phase&quot;: &quot;inspect&quot;
+            },
+            {
+              &quot;title&quot;: &quot;2단계: 반복 합성의 주기를 찾습니다&quot;,
+              &quot;text&quot;: &quot;모든 원소가 4번 적용하면 출발한 원소로 돌아오므로 반복 주기는 4입니다.&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;0에서 시작하든 6에서 시작하든, 함수 f를 네 번 적용하면 처음 값으로 돌아옵니다.&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;함수를 네 번 적용하면 원래 값으로 돌아온다\&quot;&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt; &lt;mo&gt;→&lt;/mo&gt; &lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;)&lt;/mo&gt; &lt;mo&gt;→&lt;/mo&gt; &lt;mo&gt;⋯&lt;/mo&gt; &lt;mo&gt;→&lt;/mo&gt; &lt;mi&gt;x&lt;/mi&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 네제곱 영은 영, 에프 네제곱 육은 육\&quot;&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;,&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&quot;,
+              &quot;phase&quot;: &quot;reason&quot;
+            },
+            {
+              &quot;title&quot;: &quot;3단계: 26과 27을 4로 나눈 나머지를 구합니다&quot;,
+              &quot;text&quot;: &quot;반복 주기가 4이므로 4의 배수만큼 적용한 부분은 생략하고 나머지 횟수만 계산합니다.&quot;,
+              &quot;html&quot;: &quot;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;이십육은 사 곱하기 육 더하기 이\&quot;&gt;&lt;mrow&gt;&lt;mn&gt;26&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;×&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;이십칠은 사 곱하기 육 더하기 삼\&quot;&gt;&lt;mrow&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;×&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&quot;,
+              &quot;phase&quot;: &quot;reason&quot;
+            },
+            {
+              &quot;title&quot;: &quot;4단계: f²⁶(6)을 계산합니다&quot;,
+              &quot;text&quot;: &quot;26번 합성은 4번짜리 순환 여섯 묶음과 나머지 2번이므로, 6에서 2번 이동합니다.&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;6 → 0 → 2&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 이십육 제곱 육은 에프 이 제곱 육과 같고 이이다\&quot;&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;26&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&quot;,
+              &quot;phase&quot;: &quot;reason&quot;
+            },
+            {
+              &quot;title&quot;: &quot;5단계: f²⁷(0)을 계산합니다&quot;,
+              &quot;text&quot;: &quot;27번 합성은 4번짜리 순환 여섯 묶음과 나머지 3번이므로, 0에서 3번 이동합니다.&quot;,
+              &quot;html&quot;: &quot;&lt;p&gt;0 → 2 → 4 → 6&lt;/p&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 이십칠 제곱 영은 에프 삼 제곱 영과 같고 육이다\&quot;&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;3&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&quot;,
+              &quot;phase&quot;: &quot;reason&quot;
+            },
+            {
+              &quot;title&quot;: &quot;마지막 단계: 두 값을 더해 선택지를 고릅니다&quot;,
+              &quot;text&quot;: &quot;f²⁶(6)=2, f²⁷(0)=6이므로 합은 8입니다. 정답은 ④입니다.&quot;,
+              &quot;html&quot;: &quot;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;에프 이십육 제곱 육 더하기 에프 이십칠 제곱 영은 팔\&quot;&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;26&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mn&gt;27&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;8&lt;/mn&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;p&gt;&lt;strong&gt;정답 ④ 8&lt;/strong&gt;&lt;/p&gt;&quot;,
+              &quot;phase&quot;: &quot;answer&quot;,
+              &quot;answer&quot;: true
+            }
+          ],
+          &quot;mistakes&quot;: [
+            &quot;f²⁶(6)은 f(6)에 26을 곱하는 것이 아니라, 함수 f를 26번 연속 적용한 값입니다.&quot;,
+            &quot;주기 4를 이용할 때 26과 27을 각각 4로 나눈 나머지가 2와 3임을 구분합니다.&quot;
+          ],
+          &quot;label&quot;: &quot;추가 문제 05&quot;,
+          &quot;body_html&quot;: &quot;&lt;div class=\&quot;textbook-original\&quot;&gt;&lt;span class=\&quot;textbook-original-label\&quot;&gt;추가 문제 원문&lt;/span&gt;&lt;div class=\&quot;textbook-original-content\&quot;&gt;&lt;p&gt;&lt;strong&gt;05&lt;/strong&gt; 집합 X={0, 2, 4, 6}에 대하여 함수 f:X→X가 다음과 같이 정의되어 있다.&lt;/p&gt;&lt;div class=\&quot;source-math\&quot;&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;함수 에프 엑스는 엑스가 사 이하일 때 엑스 더하기 이, 엑스가 육일 때 영\&quot;&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo stretchy=\&quot;true\&quot;&gt;{&lt;/mo&gt;&lt;mtable columnalign=\&quot;left left\&quot; rowspacing=\&quot;0.5em\&quot;&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;≤&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/div&gt;&lt;p&gt;f²=f∘f, f³=f∘f², ⋯, fⁿ⁺¹=f∘fⁿ으로 나타낼 때, f²⁶(6)+f²⁷(0)의 값은? (단, n은 자연수)&lt;/p&gt;&lt;p class=\&quot;review-choice\&quot;&gt;① 2　　② 4　　③ 6　　④ 8　　⑤ 10&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&quot;,
+          &quot;subtitle&quot;: &quot;&quot;,
+          &quot;answer_mode&quot;: true,
+          &quot;problem_original_html&quot;: &quot;&lt;div class=\&quot;textbook-original\&quot;&gt;&lt;span class=\&quot;textbook-original-label\&quot;&gt;추가 문제 원문&lt;/span&gt;&lt;div class=\&quot;textbook-original-content\&quot;&gt;&lt;p&gt;&lt;strong&gt;05&lt;/strong&gt; 집합 X={0, 2, 4, 6}에 대하여 함수 f:X→X가 다음과 같이 정의되어 있다.&lt;/p&gt;&lt;div class=\&quot;source-math\&quot;&gt;&lt;math xmlns=\&quot;http://www.w3.org/1998/Math/MathML\&quot; display=\&quot;block\&quot; aria-label=\&quot;함수 에프 엑스는 엑스가 사 이하일 때 엑스 더하기 이, 엑스가 육일 때 영\&quot;&gt;&lt;mrow&gt;&lt;mi&gt;f&lt;/mi&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mo stretchy=\&quot;true\&quot;&gt;{&lt;/mo&gt;&lt;mtable columnalign=\&quot;left left\&quot; rowspacing=\&quot;0.5em\&quot;&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;≤&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mrow&gt;&lt;mo&gt;(&lt;/mo&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;6&lt;/mn&gt;&lt;mo&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/div&gt;&lt;p&gt;f²=f∘f, f³=f∘f², ⋯, fⁿ⁺¹=f∘fⁿ으로 나타낼 때, f²⁶(6)+f²⁷(0)의 값은? (단, n은 자연수)&lt;/p&gt;&lt;p class=\&quot;review-choice\&quot;&gt;① 2　　② 4　　③ 6　　④ 8　　⑤ 10&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;&quot;,
+          &quot;source_complete&quot;: true,
+          &quot;source_required_phrases&quot;: [
+            &quot;추가 문제 05 집합 X={0, 2, 4, 6} 함수 f:X→X, f(x)=x+2 (x≤4), f(6)=0, f²=f∘f, f³=f∘f², …, fⁿ⁺¹=f∘fⁿ, f²⁶(6)+f²⁷(0)의 값은? ① 2 ② 4 ③ 6 ④ 8 ⑤ 10&quot;
+          ],
+          &quot;key_terms&quot;: [],
           &quot;solution_detail_contract&quot;: {
             &quot;audience&quot;: &quot;beginner&quot;,
             &quot;one_judgment_per_step&quot;: true,
